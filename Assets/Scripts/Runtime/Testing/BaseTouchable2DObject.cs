@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 /// <summary>
@@ -9,9 +11,16 @@ using UnityEngine.EventSystems;
 public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler
 {
     [SerializeField] private float activateWaitTime = 1.0f;
+    [SerializeField] private UnityEvent onObjectButtonDownEvent;
+    [SerializeField] private UnityEvent onObjectButtonUpEvent;
+    protected event Action OnObjectButtonDown;
+    protected event Action OnObjectButtonUp;
     
     protected bool PointerDown = false;
     protected float PointerDownTime = 0.0f;
+
+    [SerializeField] private bool canBeActivated = true;
+    public bool CanBeActivated => canBeActivated;
 
     /// <summary>
     /// Only True when pointer hold for 'activateWaitTime'.
@@ -32,7 +41,27 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
             }
         }
     }
-
+    
+    public void SubscribeOnObjectButtonDown(Action onButtonDown)
+    {
+        OnObjectButtonDown += onButtonDown;
+    }
+        
+    public void UnsubscribeOnObjectButtonDown(Action onButtonDown)
+    {
+        OnObjectButtonDown -= onButtonDown;
+    }
+    
+    public void SubscribeOnObjectButtonUp(Action onButtonUp)
+    {
+        OnObjectButtonUp += onButtonUp;
+    }
+        
+    public void UnsubscribeOnObjectButtonUp(Action onButtonUp)
+    {
+        OnObjectButtonUp -= onButtonUp;
+    }
+    
     public virtual void OnPointerEnter(PointerEventData eventData)
     {
         // Placeholder
@@ -51,6 +80,10 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
             PointerDown = true;
             PointerDownTime = 0.0f;
             StartActivatingObject();
+            
+            // invoke OnObjectButtonDown().
+            OnObjectButtonDown?.Invoke();
+            onObjectButtonDownEvent?.Invoke();
         }
     }
 
@@ -63,6 +96,9 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
             PointerDown = false;
             PointerDownTime = 0.0f;
             EndActivatingObject();
+            
+            OnObjectButtonUp?.Invoke();
+            onObjectButtonUpEvent?.Invoke();
         }
     }
 

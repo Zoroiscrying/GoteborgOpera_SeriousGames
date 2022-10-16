@@ -23,7 +23,7 @@ namespace Runtime.Testing
                     // degree of the current mouse direction.
                     float newMouseDegree = (Mathf.Atan(curMouseDirection.y/curMouseDirection.x)) * Mathf.Rad2Deg;
                     var targetQuaternion = Quaternion.LookRotation(Vector3.forward, curMouseDirection);
-                    Debug.Log(newMouseDegree);
+                    // Debug.Log(newMouseDegree);
                     this.transform.rotation = Quaternion.Slerp(this.transform.rotation,
                         targetQuaternion, 0.5f);
                     // Quaternion.AngleAxis(newMouseDegree, Vector3.forward)

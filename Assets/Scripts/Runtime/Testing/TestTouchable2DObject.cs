@@ -7,7 +7,7 @@ namespace Runtime.Testing
     public class TestTouchable2DObject : BaseTouchable2DObject
     {
         [SerializeField] private ParticleSystem popParticleSystem;
-        
+
         private bool _followMouseCursor;
 
         private void Start()
