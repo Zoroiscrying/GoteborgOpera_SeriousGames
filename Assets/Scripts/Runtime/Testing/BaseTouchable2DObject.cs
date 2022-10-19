@@ -41,7 +41,21 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
             }
         }
     }
+
+    public void ClearButtonDownEvent()
+    {
+        PointerDown = false;
+        onObjectButtonDownEvent = new UnityEvent();
+        OnObjectButtonDown = null;
+    }
     
+    public void ClearButtonUpEvent()
+    {
+        PointerDown = true;
+        onObjectButtonUpEvent = new UnityEvent();
+        OnObjectButtonUp = null;
+    }
+
     public void SubscribeOnObjectButtonDown(Action onButtonDown)
     {
         OnObjectButtonDown += onButtonDown;
@@ -91,7 +105,7 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         if (PointerDown)
         {
-            Debug.Log(name + "No longer being clicked");
+            // Debug.Log(name + "No longer being clicked");
             Activated = false;
             PointerDown = false;
             PointerDownTime = 0.0f;

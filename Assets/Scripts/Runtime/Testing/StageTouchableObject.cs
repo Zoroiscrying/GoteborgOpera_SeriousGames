@@ -5,24 +5,9 @@ using UnityEngine.Assertions;
 
 namespace Runtime.Testing
 {
-    public enum LayerZ
-    {
-        Background = 10,
-
-        StageBack = 1,
-        StageCenter = 0,
-        StageFront = -1,
-        
-        Foreground = -9,
-    }
-    
     public class StageTouchableObject : BaseTouchable2DObject
     {
         #region Properties and Variables
-
-        [SerializeField] private GameObject FunctionButtonTemplate;
-
-        private List<BaseTouchable2DObject> _functionButtons = new List<BaseTouchable2DObject>();
         
         private bool _isTranslating = false;
         private bool _isRotating = false;
@@ -46,7 +31,6 @@ namespace Runtime.Testing
                 RotatingObject();
             }
             
-            
             // hold, released, then press again to confirm
             if (Input.GetMouseButtonUp(0))
             {
@@ -61,87 +45,13 @@ namespace Runtime.Testing
         {
             base.ActivateObject();
             
-            // instantiate the touchable button objects
-            // register events to the button objects
-            for (int i = 0; i < 5; i++)
-            {
-                float degree = i * 72;
-                const float r = 1.0f;
-                float y = Mathf.Sin(degree * Mathf.Deg2Rad) * r;
-                float x = Mathf.Cos(degree * Mathf.Deg2Rad) * r;
-                Vector3 position = new Vector3(x + this.transform.position.x, y + this.transform.position.y,
-                    (int)LayerZ.Foreground + 0.5f);
-                _functionButtons.Add( 
-                    Instantiate(FunctionButtonTemplate, position, FunctionButtonTemplate.transform.rotation).
-                        GetComponent<BaseTouchable2DObject>());
-                _functionButtons[i].gameObject.SetActive(true);
-            }
-
-            for (int i = 0; i < _functionButtons.Count; i++)
-            {
-                var button = _functionButtons[i];
-                var text = button.GetComponentInChildren<TextMeshPro>();
-                if (i == 0)
-                {
-                    text.text = "T";
-                    button.SubscribeOnObjectButtonDown(StartTranslating);
-                }
-                
-                if (i == 1)
-                {
-                    text.text = "R";
-                    button.SubscribeOnObjectButtonDown(StartRotating);
-                }
-                
-                if (i == 2)
-                {
-                    text.text = "L";
-                    if (_isLocking)
-                    {
-                        button.SubscribeOnObjectButtonDown(StopLocking);
-                    }
-                    else
-                    {
-                        button.SubscribeOnObjectButtonDown(StartLocking);   
-                    }
-                }
-                
-                if (i == 3)
-                {
-                    text.text = "I";
-                    button.SubscribeOnObjectButtonDown(LayerInward);
-                }
-                
-                if (i == 4)
-                {
-                    text.text = "O";
-                    button.SubscribeOnObjectButtonDown(LayerOutward);
-                }
-            }
+            StageEditingManager.Instance.EditingStageObject(this.transform.position, 1.0f, _isLocking, _curLayerZCoord,
+                StartTranslating, StartRotating, StartLocking, StopLocking, LayerInward, LayerOutward);
         }
-
-        /// <summary>
-        /// TODO:: Move this part to a 'StageLayerControl.cs' class
-        /// Background Layer (z = 10).
-        /// 
-        /// Stage Layer Back (z = 1).
-        /// Stage Center Layer (z = 0).
-        /// Stage Layer Front (z = -1).
-        /// 
-        /// Foreground Layer (z = -2).
-        /// 
-        /// </summary>
+        
+        // TODO:: The stage editing part's logic should be in 'StagePropObject.cs'
+        // This Touchable Object class is just an interaction interface.
         private LayerZ _curLayerZCoord = LayerZ.StageCenter;
-
-        // TODO:: Deactivate buttons and clear registered events
-        private void DestroyAllButtons()
-        {
-            foreach (var button in _functionButtons)
-            {
-                Destroy(button.gameObject);
-            }
-            _functionButtons.Clear();
-        }
 
         private void TranslatingObject()
         {
@@ -160,7 +70,6 @@ namespace Runtime.Testing
             {
                 _isTranslating = true;   
             }
-            DestroyAllButtons();
         }
         
         private void StopTranslating()
@@ -192,7 +101,6 @@ namespace Runtime.Testing
             {
                 _isRotating = true;   
             }
-            DestroyAllButtons();
         }
 
         private void StopRotating()
@@ -207,14 +115,12 @@ namespace Runtime.Testing
             {
                 _isLocking = true; 
             }
-            DestroyAllButtons();
         }
 
         private void StopLocking()
         {
             Assert.IsTrue(_isLocking);
             _isLocking = false;
-            DestroyAllButtons();
         }
 
         private void LayerInward()
@@ -225,7 +131,6 @@ namespace Runtime.Testing
             var position = transform.position;
             position = new Vector3(position.x, position.y, (int)--_curLayerZCoord);
             transform.position = position;
-            DestroyAllButtons();
         }
 
         private void LayerOutward()
@@ -236,7 +141,6 @@ namespace Runtime.Testing
             var position = transform.position;
             position = new Vector3(position.x, position.y, (int)++_curLayerZCoord);
             transform.position = position;
-            DestroyAllButtons();
         }
     }
 }
