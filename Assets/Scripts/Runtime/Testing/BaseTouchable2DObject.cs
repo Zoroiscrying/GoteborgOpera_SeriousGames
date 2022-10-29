@@ -19,7 +19,7 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
     protected bool PointerDown = false;
     protected float PointerDownTime = 0.0f;
 
-    [SerializeField] private bool canBeActivated = true;
+    [SerializeField] protected bool canBeActivated = true;
     public bool CanBeActivated => canBeActivated;
 
     /// <summary>
@@ -32,7 +32,7 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (PointerDown && !Activated)
+        if (canBeActivated && PointerDown && !Activated)
         {
             PointerDownTime += Time.deltaTime;
             if (PointerDownTime > activateWaitTime)
@@ -88,9 +88,9 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        if (!PointerDown)
+        if (canBeActivated && !PointerDown)
         {
-            Debug.Log(name + "Game Object Click in Progress");
+            // Debug.Log(name + "Game Object Click in Progress");
             PointerDown = true;
             PointerDownTime = 0.0f;
             StartActivatingObject();
@@ -103,7 +103,7 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public virtual void OnPointerUp(PointerEventData eventData)
     {
-        if (PointerDown)
+        if (canBeActivated && PointerDown)
         {
             // Debug.Log(name + "No longer being clicked");
             Activated = false;

@@ -76,9 +76,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1307376791
+  m_SortingLayer: 1
+  m_SortingOrder: 10
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &406054456790207975
 MonoBehaviour:
@@ -182,15 +182,15 @@ GameObject:
   m_Component:
   - component: {fileID: 406054458342991169}
   - component: {fileID: 406054458342991168}
-  - component: {fileID: 406054458342991175}
   - component: {fileID: 406054458342991170}
+  - component: {fileID: 4434922038556941415}
   m_Layer: 0
   m_Name: PopButton_Rotate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &406054458342991169
 Transform:
   m_ObjectHideFlags: 0
@@ -227,7 +227,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 04717b96437030f4483cbe198d7a819c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -245,9 +245,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1307376791
+  m_SortingLayer: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.56037736, g: 0.8765916, b: 1, a: 1}
   m_FlipX: 0
@@ -259,26 +259,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &406054458342991175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 406054458342991174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c206c53d7cd75784eb0d5af007909ce2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activateWaitTime: 1
-  onObjectButtonDownEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onObjectButtonUpEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  canBeActivated: 1
 --- !u!58 &406054458342991170
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -295,3 +275,25 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &4434922038556941415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406054458342991174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 665c14b1f92d447ab01f0fe94b7501fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activateWaitTime: 1
+  onObjectButtonDownEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onObjectButtonUpEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  canBeActivated: 1
+  buttonSpriteRenderer: {fileID: 406054458342991168}
+  buttonCollider: {fileID: 406054458342991170}

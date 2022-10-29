@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Runtime.SubfunctionObject;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,13 +8,13 @@ namespace Runtime.Testing
 {
     public enum LayerZ
     {
-        Background = 10,
+        Background = -10,
 
-        StageBack = 1,
+        StageBack = -1,
         StageCenter = 0,
-        StageFront = -1,
+        StageFront = 1,
         
-        Foreground = -9,
+        Foreground = 9,
     }
     
     /// <summary>
@@ -50,120 +51,131 @@ namespace Runtime.Testing
         // Template Prefabs
         [SerializeField] private GameObject defaultStageObjectPrefab;
         [SerializeField] private List<GameObject> functionButtonPrefabs;
-
-        [SerializeField] private BaseStageObjectData testStageObjectData;
-
+        
         private List<StagePropObject> _stagePropObjectsInstantiated = new List<StagePropObject>();
 
         // TODO:: Change this to Touchable Function Button
-        private List<BaseTouchable2DObject> _functionButtons = new List<BaseTouchable2DObject>();
+        private List<BaseStagePropSubfunctionButtonObject> _stagePropfunctionButtons = new List<BaseStagePropSubfunctionButtonObject>();
+
+        [SerializeField] private StageEditingUI stageEditingUI;
+        
+        private bool _shouldOpenStageEditingUI = true;
+        private bool _shouldOpenPropProducingUI = true;
+
+        #region Unity Events
 
         private void Awake()
         {
             _instance = this;
         }
-
+        
+        
         private void Update()
         {
-            // test scripts
-            if (Input.GetKeyDown(KeyCode.P))
+            // todo:: move this to proper places (should use UI button to navigate through scenes)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                InstantiateNewPropToStage(Vector2.zero, testStageObjectData);
+                if (_shouldOpenStageEditingUI)
+                {
+                    stageEditingUI.StartStageEditingUI();
+                    stageEditingUI.InitializeStageEditingUI(StorageManager.Instance.StageObjectDataList);   
+                }
+                else
+                {
+                    stageEditingUI.EndStageEditingUI();
+                }
+
+                _shouldOpenStageEditingUI = !_shouldOpenStageEditingUI;
+            }
+
+            // todo:: move this to proper places (should use UI button to navigate through scenes)
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                PurchaseManager.Instance.TogglePurchaseUIPanel(_shouldOpenPropProducingUI);
+                _shouldOpenPropProducingUI = !_shouldOpenPropProducingUI;
             }
         }
 
         private void OnEnable()
         {
-            if (_functionButtons.Count == 0)
+            if (_stagePropfunctionButtons.Count == 0)
             {
                 for (int i = 0; i < functionButtonPrefabs.Count; i++)
                 {
-                    _functionButtons.Add( 
+                    _stagePropfunctionButtons.Add( 
                         Instantiate(functionButtonPrefabs[i], Vector3.zero, functionButtonPrefabs[i].transform.rotation).
-                            GetComponent<BaseTouchable2DObject>());
+                            GetComponent<BaseStagePropSubfunctionButtonObject>());
                     // disable this for now
-                    _functionButtons[i].gameObject.SetActive(false);
+                    _stagePropfunctionButtons[i].gameObject.SetActive(false);
                 }
             }
         }
 
-        private void DeactivateEditingButtons()
-        {
-            foreach (var button in _functionButtons)
-            {
-                // deactivate current button game objects
-                button.gameObject.SetActive(false);
-            }
-        }
+        #endregion
 
-        
+        // todo:: instantiate props, actors and orchestras should be different.
         public void InstantiateNewPropToStage(Vector2 positionXY, BaseStageObjectData objData)
         {
             var stageObj = Instantiate(defaultStageObjectPrefab,
                 new Vector3(positionXY.x, positionXY.y, (int)LayerZ.StageCenter),
                 defaultStageObjectPrefab.transform.rotation).GetComponent<StagePropObject>();
             stageObj.InitializeFromStageObjectData(objData);
+            _stagePropObjectsInstantiated.Add(stageObj);
         }
-        
-        public void EditingStageObject(Vector3 buttonCenter, float buttonSeparateRadius, bool isLocking, LayerZ curLayer,
-            Action onStartTranslate, Action onStartRotate, Action onStartLocking, Action onStopLocking,
-            Action onLayerInward, Action onLayerOutward)
+
+        public void PutPropFromStageToStorage(StagePropObject propObject)
         {
-            int num = 0;
-            
-            foreach (var button in _functionButtons)
+            _stagePropObjectsInstantiated.Remove(propObject);
+            StorageManager.Instance.AddStageObjectData(propObject.StageObjectData);
+            Destroy(propObject.gameObject);
+        }
+
+        public void EditingStageObject(StagePropObject propObject, float buttonSeparateRadius)
+        {
+            foreach (var button in _stagePropfunctionButtons)
             {
+                button.gameObject.SetActive(true);
                 // first clear the events
                 button.ClearButtonDownEvent();
-                
-                // deactivate current button game objects
-                // button.gameObject.SetActive(false);
-                
+                // deactivate buttons
+                button.DeactivateButton();
+                // make sure other buttons will be toggled off
                 button.SubscribeOnObjectButtonDown(DeactivateEditingButtons);
-                // Inject new events
-                if (num == 0) // Translate
-                {
-                    button.SubscribeOnObjectButtonDown(onStartTranslate);
-                }
-                else if (num == 1) // Rotate
-                {
-                    button.SubscribeOnObjectButtonDown(onStartRotate);
-                }
-                else if (num == 2) // Lock
-                {
-                    if (isLocking)
-                    {
-                        button.SubscribeOnObjectButtonDown(onStopLocking);
-                    }
-                    else
-                    {
-                        button.SubscribeOnObjectButtonDown(onStartLocking);   
-                    }
-                }
-                else if (num == 3) // Inward
-                {
-                    button.SubscribeOnObjectButtonDown(onLayerInward);
-                }
-                else if (num == 4) // Outward
-                {
-                    button.SubscribeOnObjectButtonDown(onLayerOutward);
-                }
-                num++;
+                // inject individual events to the buttons.
+                button.InitializeButtonObject(propObject.transform, propObject);
             }
 
-            // re-animate the buttons
-            for (int i = 0; i < _functionButtons.Count; i++)
+            // get the current mouse position
+            var desiredPosition = propObject.transform.position;
+            if (SceneCameraReference.Instance.SceneMainCamera != null)
             {
-                const float degreeOffset = 18f;
-                float degree = i * 72 + degreeOffset;
+                desiredPosition = SceneCameraReference.Instance.SceneMainCamera.ScreenToWorldPoint(Input.mousePosition);
+            }   
+            
+            // re-animate the buttons
+            float degreeInterval = 360.0f / (float)_stagePropfunctionButtons.Count;
+            for (int i = 0; i < _stagePropfunctionButtons.Count; i++)
+            {
+                float degreeOffset = 90.0f - degreeInterval;
+                float degree = i * degreeInterval + degreeOffset;
                 float y = Mathf.Sin(degree * Mathf.Deg2Rad) * buttonSeparateRadius;
                 float x = Mathf.Cos(degree * Mathf.Deg2Rad) * buttonSeparateRadius;
-                Vector3 position = new Vector3(x + buttonCenter.x, y + buttonCenter.y,
+                Vector3 position = new Vector3(x + desiredPosition.x, y + desiredPosition.y,
                     (int)LayerZ.Foreground + 0.5f);
-                _functionButtons[i].gameObject.transform.position = position;
-                _functionButtons[i].gameObject.SetActive(true);
+                
+                _stagePropfunctionButtons[i].gameObject.transform.position = position;
+                _stagePropfunctionButtons[i].ReactivateButton();
             }
-
+        }
+        
+        private void DeactivateEditingButtons()
+        {
+            foreach (var button in _stagePropfunctionButtons)
+            {
+                // deactivate current button game objects
+                button.DeactivateButton();
+            }
         }
     }
+    
 }

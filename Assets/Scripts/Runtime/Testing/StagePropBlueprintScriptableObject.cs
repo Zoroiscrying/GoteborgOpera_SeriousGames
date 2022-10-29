@@ -38,14 +38,55 @@ namespace Runtime.Testing
     /// Therefore, the blueprint only stores the sprite and resources used for this prop
     /// </summary>
     [CreateAssetMenu(fileName = "StagePropBlueprint_0", menuName = "GoteborgProject/CreatePropBlueprint", order = 0)]
-    public class StagePropBlueprintScriptableObject : ScriptableObject
+    public class StagePropBlueprintScriptableObject : ScriptableObject, IComparable
     {
-        public Vector2 propScale = Vector2.one;
-        
-        public Sprite propSprite;
+        [SerializeField] private string blueprintName;
+        public string BlueprintName => blueprintName;
+
+        [SerializeField] int moneyToBuy = 0;
+        public int MoneyToBuy => moneyToBuy;
+
+        [SerializeField] private Vector2 propScale = Vector2.one;
+        public Vector2 PropScale => propScale;
+
+        [SerializeField] Sprite propSprite;
+
+        public Sprite PropSprite => propSprite;
 
         [Header("Resource Consumes")]
-        public SerializedDictionary<GResourceType, int> resourceConsumes =
-            new SerializedDictionary<GResourceType, int>();
+        [SerializeField] private GenericDictionary<GResourceType, int> resourceConsumes =
+            new()
+            {
+                { GResourceType.Money, 0},
+                { GResourceType.Wood, 0},
+                { GResourceType.Metal, 0},
+                { GResourceType.Cloth, 0},
+                { GResourceType.Paint, 0},
+            };
+
+        public IDictionary<GResourceType, int> ResourceConsumes => resourceConsumes;
+
+        [Header("Machine Level Requirement")]
+        [SerializeField] private GenericDictionary<GResourceType, int> machineLevelRequirement =
+            new()
+            {
+                { GResourceType.Wood, 0},
+                { GResourceType.Metal, 0},
+                { GResourceType.Cloth, 0},
+                { GResourceType.Paint, 0},
+            };
+
+        public IDictionary<GResourceType, int> MachineLevelRequirement => machineLevelRequirement;
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+
+            StagePropBlueprintScriptableObject otherBlueprint = obj as StagePropBlueprintScriptableObject;
+            if (otherBlueprint != null)
+                return this.MoneyToBuy.CompareTo(otherBlueprint.MoneyToBuy);
+            else
+                throw new ArgumentException("Object is not a Blueprint");
+        }
     }
 }

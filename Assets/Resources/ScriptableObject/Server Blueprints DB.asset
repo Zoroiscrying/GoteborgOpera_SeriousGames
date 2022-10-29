@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aadbe6560954acf961a5bf900bebb05, type: 3}
+  m_Name: Server Blueprints DB
+  m_EditorClassIdentifier: 
+  stagePropBlueprints:
+  - {fileID: 11400000, guid: 3f1be88fa11bb7c4889701e722bab1f3, type: 2}
+  - {fileID: 11400000, guid: b183f39b930d09849a44c876fb40fcb2, type: 2}
+  - {fileID: 11400000, guid: 84c3b7b9184ad694bbed9e272b1dd7dd, type: 2}
+  - {fileID: 11400000, guid: b0860b2db3095664aa1ca1541536f895, type: 2}
+  - {fileID: 11400000, guid: 5024b80b6ab7b124f9bfa2e7497b35a6, type: 2}
+  - {fileID: 11400000, guid: bc6afa20cbadb04468212f83b1219e6b, type: 2}
+  - {fileID: 11400000, guid: 924c121c25f74844aa700dc0c602ee99, type: 2}

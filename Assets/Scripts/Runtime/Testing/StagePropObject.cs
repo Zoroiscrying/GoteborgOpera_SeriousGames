@@ -20,11 +20,30 @@ namespace Runtime.Testing
         private SpriteRenderer _spriteRenderer;
         private StageTouchableObject _stageTouchableObject;
 
-        public StagePropBlueprintScriptableObject StageObjectBluePrint => stageObjectBlueprint;
+        public BaseStageObjectData StageObjectData => stageObjectData;
         
-        [SerializeField] private StagePropBlueprintScriptableObject stageObjectBlueprint;
+        [SerializeField] private BaseStageObjectData stageObjectData;
         [SerializeField] private BasePropDecorator basePropDecorator;
 
+        private bool _isLocked = false;
+        public bool IsLocked
+        {
+            get => _isLocked;
+            set => _isLocked = value;
+        }
+        
+        private LayerZ _curLayerZCoord = LayerZ.StageCenter;
+        public LayerZ CurLayerZCoord
+        {
+            get => _curLayerZCoord;
+            set => _curLayerZCoord = value;
+        }
+
+        public void UpdateRendererOrderInLayer(int newOrder)
+        {
+            this._spriteRenderer.sortingOrder = newOrder;
+        }
+        
         /// <summary>
         /// This function is to be called when a prop from a prop list is instantiated.
         /// </summary>
@@ -40,9 +59,10 @@ namespace Runtime.Testing
         /// <param name="stageObjectData"></param>
         public void InitializeFromStageObjectData(BaseStageObjectData stageObjectData)
         {
-            this.stageObjectBlueprint = stageObjectData.stagePropBlueprintScriptableObject;
+            this.stageObjectData = stageObjectData;
             OnEnable();
             ApplyPropDecorators();
+            GetComponent<PolygonCollider2D>().TryUpdateShapeToAttachedSprite();
         }
 
         private void OnValidate()
@@ -70,12 +90,14 @@ namespace Runtime.Testing
 
         private void ApplyPropDecorators()
         {
+            // pass in list of decorators
             basePropDecorator.ApplyDecoration();
-            if (stageObjectBlueprint)
+            
+            if (stageObjectData.stagePropBlueprintScriptableObject)
             {
-                _spriteRenderer.sprite = stageObjectBlueprint.propSprite;
-                this.transform.localScale = new Vector3(stageObjectBlueprint.propScale.x,
-                    stageObjectBlueprint.propScale.y, 1.0f);
+                _spriteRenderer.sprite = stageObjectData.stagePropBlueprintScriptableObject.PropSprite;
+                this.transform.localScale = new Vector3(stageObjectData.stagePropBlueprintScriptableObject.PropScale.x,
+                    stageObjectData.stagePropBlueprintScriptableObject.PropScale.y, 1.0f);
             }
         }
     }
