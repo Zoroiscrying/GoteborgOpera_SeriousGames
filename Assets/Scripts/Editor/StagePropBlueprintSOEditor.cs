@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using Runtime.ScriptableObjects;
 using Runtime.Testing;
 using UnityEditor;
 using UnityEngine;
 
 namespace Editor
 {
-    [CustomEditor(typeof(StagePropBlueprintScriptableObject))]
+    [CustomEditor(typeof(StagePropBlueprintSO))]
     public class StagePropBlueprintSOEditor : UnityEditor.Editor
     {
-        private StagePropBlueprintScriptableObject _instance;
+        private StagePropBlueprintSO _instance;
         private SerializedProperty _spriteProperty;
         private SerializedProperty _resourceConsumeProperty;
         private SerializedProperty _machineLevelRequirementProperty;
@@ -18,7 +19,7 @@ namespace Editor
 
         private void OnEnable()
         {
-            _instance = (StagePropBlueprintScriptableObject)target;
+            _instance = (StagePropBlueprintSO)target;
             _spriteProperty = serializedObject.FindProperty("propSprite");
             _resourceConsumeProperty = serializedObject.FindProperty("resourceConsumes");
             _machineLevelRequirementProperty = serializedObject.FindProperty("machineLevelRequirement");

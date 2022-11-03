@@ -15,6 +15,8 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
     [SerializeField] private UnityEvent onObjectButtonUpEvent;
     protected event Action OnObjectButtonDown;
     protected event Action OnObjectButtonUp;
+
+    protected event Action OnTouchableActivated;
     
     protected bool PointerDown = false;
     protected float PointerDownTime = 0.0f;
@@ -49,11 +51,27 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
         OnObjectButtonDown = null;
     }
     
+    public void ClearActivatedEvent()
+    {
+        PointerDown = false;
+        OnTouchableActivated = null;
+    }
+    
     public void ClearButtonUpEvent()
     {
         PointerDown = true;
         onObjectButtonUpEvent = new UnityEvent();
         OnObjectButtonUp = null;
+    }
+    
+    public void SubscribeOnObjectActivated(Action onActivated)
+    {
+        OnTouchableActivated += onActivated;
+    }
+        
+    public void UnsubscribeOnObjectActivated(Action onActivated)
+    {
+        OnTouchableActivated -= onActivated;
     }
 
     public void SubscribeOnObjectButtonDown(Action onButtonDown)
@@ -90,7 +108,7 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         if (canBeActivated && !PointerDown)
         {
-            // Debug.Log(name + "Game Object Click in Progress");
+            Debug.Log(name + "Game Object Click in Progress");
             PointerDown = true;
             PointerDownTime = 0.0f;
             StartActivatingObject();
@@ -128,6 +146,10 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
 
     protected virtual void ActivateObject()
     {
-        Activated = true;
+        if (canBeActivated)
+        {
+            OnTouchableActivated?.Invoke();
+            Activated = true;   
+        }
     }
 }

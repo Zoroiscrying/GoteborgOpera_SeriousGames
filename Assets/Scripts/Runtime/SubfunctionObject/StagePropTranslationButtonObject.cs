@@ -39,5 +39,11 @@ namespace Runtime.SubfunctionObject
 
             _isTranslating = true;
         }
+        
+        protected override bool IfButtonCanAppear()
+        {
+            // if it's not scenery, the button can appear and inwarding or outwarding the object
+            return TargetPropObject.StageObjectData is not SceneryStageObjectData;
+        }
     }
 }

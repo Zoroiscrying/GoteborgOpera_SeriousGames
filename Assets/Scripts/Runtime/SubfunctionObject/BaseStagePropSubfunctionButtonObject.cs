@@ -11,7 +11,7 @@ namespace Runtime.SubfunctionObject
         // public Sprite ButtonSprite => buttonSprite;
 
         protected Transform TargetTransform;
-        protected StagePropObject TargetPropObject;
+        protected BaseStageObject TargetPropObject;
 
         protected void IndicateNotInteractable()
         {
@@ -27,6 +27,7 @@ namespace Runtime.SubfunctionObject
         {
             PointerDown = false;
             // this.canBeActivated = true;
+            if (!IfButtonCanAppear()) return; // if this button is not for the type of prop object, quit activating this button
             DetermineInteractable();
             buttonSpriteRenderer.enabled = true;
             buttonCollider.enabled = true;
@@ -42,7 +43,7 @@ namespace Runtime.SubfunctionObject
             this.transform.GetChild(0).gameObject.SetActive(false);
         }
 
-        public void InitializeButtonObject(Transform transform, StagePropObject propObject)
+        public void InitializeButtonObject(Transform transform, BaseStageObject propObject)
         {
             this.TargetTransform = transform;
             this.TargetPropObject = propObject;
@@ -68,6 +69,11 @@ namespace Runtime.SubfunctionObject
         {
             // Debug.Log("On Subfunction Button Down.");
             DeactivateButton();
+        }
+
+        protected virtual bool IfButtonCanAppear()
+        {
+            return true;
         }
     }
 }
