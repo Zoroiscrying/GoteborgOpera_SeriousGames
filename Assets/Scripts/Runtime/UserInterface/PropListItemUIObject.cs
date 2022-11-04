@@ -40,7 +40,7 @@ namespace Runtime.UserInterface
 
         public void HintOnSelected()
         {
-            listItemBg.color = new Color(0.8f, 0.4f, 0.2f);
+            listItemBg.color = new Color(0.714f, 0.387f, 0.852f);
         }
 
         public void HintOnDeselected()

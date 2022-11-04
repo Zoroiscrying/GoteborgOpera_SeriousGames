@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 504cf5a00d414925a8adaa33b3775e64, type: 3}
+  m_Name: StagePropBlueprint_Cactus_2
+  m_EditorClassIdentifier: 
+  previewSprite: {fileID: 0}
+  blueprintName: Cactus 2
+  moneyToBuy: 0
+  resourceConsumes:
+    list:
+    - Key: 0
+      Value: 0
+    - Key: 1
+      Value: 1
+    - Key: 2
+      Value: 3
+    - Key: 3
+      Value: 0
+    - Key: 4
+      Value: 0
+    keyCollision: 0
+  machineLevelRequirement:
+    list:
+    - Key: 1
+      Value: 1
+    - Key: 2
+      Value: 1
+    - Key: 3
+      Value: 0
+    - Key: 4
+      Value: 0
+    keyCollision: 0
+  propScale: {x: 0.15, y: 0.15}
+  propSprite: {fileID: 21300000, guid: 4d6ed1ea112668d46be4057ed4403308, type: 3}
+  spriteTint: {r: 0, g: 0.40784317, b: 0.21960786, a: 1}

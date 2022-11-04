@@ -16,6 +16,7 @@ namespace Editor
         private SerializedProperty _machineLevelRequirementProperty;
         private SerializedProperty _blueprintNameProperty;
         private SerializedProperty _propScaleProperty;
+        private SerializedProperty _spriteTintProperty;
 
         private void OnEnable()
         {
@@ -25,6 +26,7 @@ namespace Editor
             _machineLevelRequirementProperty = serializedObject.FindProperty("machineLevelRequirement");
             _blueprintNameProperty = serializedObject.FindProperty("blueprintName");
             _propScaleProperty = serializedObject.FindProperty("propScale");
+            _spriteTintProperty = serializedObject.FindProperty("spriteTint");
         }
 
         public override void OnInspectorGUI()
@@ -39,6 +41,7 @@ namespace Editor
                 EditorGUILayout.PropertyField(_resourceConsumeProperty, new GUIContent("Resource Consumes"));
                 EditorGUILayout.PropertyField(_machineLevelRequirementProperty,
                     new GUIContent("Machine Level Requirements"));
+                EditorGUILayout.PropertyField(_spriteTintProperty, new GUIContent("Sprite Tint"));
             }
             serializedObject.ApplyModifiedProperties();
         }

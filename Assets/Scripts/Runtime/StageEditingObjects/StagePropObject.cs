@@ -55,7 +55,6 @@ namespace Runtime.Testing
             else
             {
                 OnEnable();
-                
             }
         }
 
@@ -81,6 +80,7 @@ namespace Runtime.Testing
             {
                 GetComponent<SpriteMask>().sprite = stagePropBlueprintSo.PropSprite;
                 _spriteRenderer.sprite = stagePropBlueprintSo.PropSprite;
+                _spriteRenderer.color = stagePropBlueprintSo.SpriteTint;
                 this.transform.localScale = new Vector3(stagePropBlueprintSo.PropScale.x,
                     stagePropBlueprintSo.PropScale.y, 1.0f);
             }

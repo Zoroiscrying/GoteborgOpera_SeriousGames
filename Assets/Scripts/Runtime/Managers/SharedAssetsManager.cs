@@ -17,7 +17,7 @@ namespace Runtime.Managers
 
                 if (!_instance)
                 {
-                    Debug.LogError("No Stage Editing Manager Exist, Please check the scene.");
+                    Debug.LogError("No Shared Asset Manager Exist, Please check the scene.");
                 }
 
                 return _instance;

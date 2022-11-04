@@ -26,6 +26,10 @@ namespace Runtime.ScriptableObjects
         
         public override Sprite PreviewSprite => propSprite;
         
+        [SerializeField] private Color spriteTint = Color.white;
+
+        public Color SpriteTint => spriteTint;
+
         public override StageObjectType ObjectDataType => StageObjectType.Prop;
     }
 }

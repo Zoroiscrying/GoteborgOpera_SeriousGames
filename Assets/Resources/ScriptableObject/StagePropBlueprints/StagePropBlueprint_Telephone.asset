@@ -9,20 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed18f327766a4c3e8e0bce73fb94c455, type: 3}
-  m_Name: StageEffectBlueprintSO
+  m_Script: {fileID: 11500000, guid: 504cf5a00d414925a8adaa33b3775e64, type: 3}
+  m_Name: StagePropBlueprint_Telephone
   m_EditorClassIdentifier: 
-  previewSprite: {fileID: 21300000, guid: 8e88614a5d2aead4998a8c70955662c6, type: 3}
-  blueprintName: RainStageEffect
-  moneyToBuy: 10
+  previewSprite: {fileID: 0}
+  blueprintName: Telephone
+  moneyToBuy: 0
   resourceConsumes:
     list:
     - Key: 0
-      Value: 10
+      Value: 0
     - Key: 1
       Value: 0
     - Key: 2
-      Value: 0
+      Value: 3
     - Key: 3
       Value: 0
     - Key: 4
@@ -33,12 +33,12 @@ MonoBehaviour:
     - Key: 1
       Value: 0
     - Key: 2
-      Value: 0
+      Value: 1
     - Key: 3
       Value: 0
     - Key: 4
       Value: 0
     keyCollision: 0
-  effectSprite: {fileID: 21300000, guid: 8e88614a5d2aead4998a8c70955662c6, type: 3}
-  effectObjectPrefab: {fileID: 3040624567514805215, guid: 4403694ec5c0b8e45bc2e1876ea9bf58, type: 3}
-  effectLayer: 0
+  propScale: {x: 0.1, y: 0.1}
+  propSprite: {fileID: 21300000, guid: 497c00f14a4cea440b25824fa13b31ad, type: 3}
+  spriteTint: {r: 0.79215693, g: 0.2784314, b: 0.27058825, a: 1}

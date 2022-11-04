@@ -14,7 +14,7 @@ namespace Runtime.UserInterface
         [SerializeField] private BackStageViewUI backStageViewUI;
         [SerializeField] private Button endEditingButton;
         [SerializeField] private Transform stageEditingPanel;
-        [SerializeField] private Transform propListUIParent;
+        [SerializeField] private RectTransform propListUIParent;
         [SerializeField] private GameObject stageObjectButtonUIObject;
 
         [SerializeField] private Button togglePropDisplayButton;
@@ -58,7 +58,7 @@ namespace Runtime.UserInterface
         public void InitializeStageEditingUIList(List<BaseStageObjectData> objDataList)
         {
             DestroyAllUIButtons();
-            
+
             // create new object buttons
             foreach (var stageObject in objDataList)
             {
@@ -87,6 +87,8 @@ namespace Runtime.UserInterface
                     AddNewObjectButton(stageObject, StageObjectType.Light);   
                 }
             }
+            
+            propListUIParent.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 250.0f * objDataList.Count);
             
             UpdateAllFlagButtons();
         }

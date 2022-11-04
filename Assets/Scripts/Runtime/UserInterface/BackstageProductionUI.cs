@@ -126,13 +126,13 @@ namespace Runtime.UserInterface
             if (_selectedProp)
             {
                 woodRequirementText.text =
-                    $"Wood:{StorageManager.Instance.ResourceStorage[GResourceType.Wood]}(-{_selectedProp.Blueprint.ResourceConsumes[GResourceType.Wood]})";
+                    $"{StorageManager.Instance.ResourceStorage[GResourceType.Wood]}(-{_selectedProp.Blueprint.ResourceConsumes[GResourceType.Wood]})";
                 metalRequirementText.text =
-                    $"Metal:{StorageManager.Instance.ResourceStorage[GResourceType.Metal]}(-{_selectedProp.Blueprint.ResourceConsumes[GResourceType.Metal]})";
+                    $"{StorageManager.Instance.ResourceStorage[GResourceType.Metal]}(-{_selectedProp.Blueprint.ResourceConsumes[GResourceType.Metal]})";
                 clothRequirementText.text =
-                    $"Cloth:{StorageManager.Instance.ResourceStorage[GResourceType.Cloth]}(-{_selectedProp.Blueprint.ResourceConsumes[GResourceType.Cloth]})";
+                    $"{StorageManager.Instance.ResourceStorage[GResourceType.Cloth]}(-{_selectedProp.Blueprint.ResourceConsumes[GResourceType.Cloth]})";
                 paintRequirementText.text =
-                    $"Paint:{StorageManager.Instance.ResourceStorage[GResourceType.Paint]}(-{_selectedProp.Blueprint.ResourceConsumes[GResourceType.Paint]})";
+                    $"{StorageManager.Instance.ResourceStorage[GResourceType.Paint]}(-{_selectedProp.Blueprint.ResourceConsumes[GResourceType.Paint]})";
 
             }
         }

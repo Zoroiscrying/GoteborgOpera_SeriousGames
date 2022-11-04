@@ -106,7 +106,7 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        if (canBeActivated && !PointerDown)
+        if (canBeActivated && !PointerDown && eventData.button == PointerEventData.InputButton.Left)
         {
             Debug.Log(name + "Game Object Click in Progress");
             PointerDown = true;
@@ -121,7 +121,7 @@ public class BaseTouchable2DObject : MonoBehaviour, IPointerEnterHandler, IPoint
 
     public virtual void OnPointerUp(PointerEventData eventData)
     {
-        if (canBeActivated && PointerDown)
+        if (canBeActivated && PointerDown && eventData.button == PointerEventData.InputButton.Left)
         {
             // Debug.Log(name + "No longer being clicked");
             Activated = false;

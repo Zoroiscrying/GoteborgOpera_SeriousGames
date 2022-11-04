@@ -77,17 +77,17 @@ namespace Runtime.UserInterface
         public void UpdateResourcesBarUI()
         {
             moneyStorageText.text =
-                $"Money:{StorageManager.Instance.ResourceStorage[GResourceType.Money]}";
+                $"{StorageManager.Instance.ResourceStorage[GResourceType.Money]}";
             woodStorageText.text =
-                $"Wood:{StorageManager.Instance.ResourceStorage[GResourceType.Wood]}";
+                $"{StorageManager.Instance.ResourceStorage[GResourceType.Wood]}";
             metalStorageText.text =
-                $"Metal:{StorageManager.Instance.ResourceStorage[GResourceType.Metal]}";
+                $"{StorageManager.Instance.ResourceStorage[GResourceType.Metal]}";
             clothStorageText.text =
-                $"Cloth:{StorageManager.Instance.ResourceStorage[GResourceType.Cloth]}";
+                $"{StorageManager.Instance.ResourceStorage[GResourceType.Cloth]}";
             paintStorageText.text =
-                $"Paint:{StorageManager.Instance.ResourceStorage[GResourceType.Paint]}";
+                $"{StorageManager.Instance.ResourceStorage[GResourceType.Paint]}";
             storageCountText.text =
-                $"Storage {StorageManager.Instance.StageObjectDataList.Count}/{StorageManager.Instance.MaxStagePropNum}";
+                $"{StorageManager.Instance.StageObjectDataList.Count}/{StorageManager.Instance.MaxStagePropNum}";
             storageCountText.color = 
                 StorageManager.Instance.StageObjectDataList.Count >= StorageManager.Instance.MaxStagePropNum ? Color.red : Color.black;
         }
