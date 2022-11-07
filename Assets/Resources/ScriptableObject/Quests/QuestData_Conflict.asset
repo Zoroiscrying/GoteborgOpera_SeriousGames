@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4372aa463114b3f961e7a751b636b4c, type: 3}
-  m_Name: QuestData_Confliction
+  m_Name: QuestData_Conflict
   m_EditorClassIdentifier: 
-  questTitle: Confliction
+  questTitle: Conflict
   questDescription: 'Action has always been all the rage in entertainment, show some
     War in the next play! '
