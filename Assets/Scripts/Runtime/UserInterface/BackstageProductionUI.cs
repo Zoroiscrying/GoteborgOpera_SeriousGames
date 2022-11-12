@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Runtime.ScriptableObjects;
 using Runtime.Testing;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -18,33 +20,46 @@ namespace Runtime.UserInterface
     /// </summary>
     public class BackstageProductionUI : MonoBehaviour
     {
+        // Prop List UI
         [SerializeField] private RectTransform propListTransform;
         [SerializeField] private GameObject propListItemPrefab;
 
+        // Machine Levels UI
         [SerializeField] private TextMeshProUGUI woodMachineLevel;
         [SerializeField] private TextMeshProUGUI metalMachineLevel;
         [SerializeField] private TextMeshProUGUI clothMachineLevel;
         [SerializeField] private TextMeshProUGUI paintMachineLevel;
         
+        // Resource Requirements UI
         [SerializeField] private TextMeshProUGUI woodRequirementText;
         [SerializeField] private TextMeshProUGUI metalRequirementText;
         [SerializeField] private TextMeshProUGUI clothRequirementText;
         [SerializeField] private TextMeshProUGUI paintRequirementText;
 
+        // Resource Bar UI
         [SerializeField] private PlayerResourcesBarUI resourceBarUI;
         [SerializeField] private TextMeshProUGUI moneyCostWhenProduce;
 
+        // Backstage View UI - For Quitting Production UI
         [SerializeField] private BackStageViewUI backStageViewUI;
         
+        // Button Interactions
         [SerializeField] private Button producePropButton;
         [SerializeField] private Button recycleButton;
         [SerializeField] private Button backButton;
         
-        private List<PropListItemUIObject> _propListItems = new List<PropListItemUIObject>();
-        private PropListItemUIObject _selectedProp;
+        // UI Object Data List
+        private List<StageObjectListItemUIObject> _propListItems = new List<StageObjectListItemUIObject>();
+        private StageObjectListItemUIObject _selectedStageObject;
+
+        // Scene Preview Update
+        [SerializeField] private Camera previewShotCamera;
+        [SerializeField] private Transform stagePreviewSceneObjects;
+        [SerializeField] private Transform stageObjectPreviewParent;
 
         private void OnEnable()
         {
+            previewShotCamera.enabled = false;
             Assert.IsNotNull(propListTransform);
             Assert.IsNotNull(propListItemPrefab);
             Assert.IsNotNull(woodMachineLevel);
@@ -78,36 +93,49 @@ namespace Runtime.UserInterface
             UpdateBlueprintList();
             UpdateMachineLevelUI();
             UpdateCurrentResourcesUI();
+            // clear preview objects
+            for (int i = 0; i < stageObjectPreviewParent.childCount; i++)
+            {
+                Destroy(stageObjectPreviewParent.GetChild(i).gameObject);
+            }
+            // render the preview at start
+            previewShotCamera.enabled = true;
+            stagePreviewSceneObjects.gameObject.SetActive(true);
+            //previewShotCamera.Render();
+            //previewShotCamera.enabled = false;
         }
 
         private void SwitchToBackstageView()
         {
             this.gameObject.SetActive(false);
             
-            if (_selectedProp)
+            if (_selectedStageObject)
             {
-                _selectedProp.HintOnDeselected();
+                _selectedStageObject.HintOnDeselected();
             }
-            _selectedProp = null;
+            _selectedStageObject = null;
             
             backStageViewUI.BackStageViewHomePage();
+            
+            previewShotCamera.enabled = false;
+            stagePreviewSceneObjects.gameObject.SetActive(false);
         }
         
         private void UpdateMachineLevelUI()
         {
-            if (_selectedProp)
+            if (_selectedStageObject)
             {
                 UpdateMachineLevelText(metalMachineLevel,
-                    _selectedProp.Blueprint.MachineLevelRequirement[GResourceType.Metal],
+                    _selectedStageObject.Blueprint.MachineLevelRequirement[GResourceType.Metal],
                     StorageManager.Instance.MachineLevels[GResourceType.Metal]);
                 UpdateMachineLevelText(woodMachineLevel,
-                    _selectedProp.Blueprint.MachineLevelRequirement[GResourceType.Wood],
+                    _selectedStageObject.Blueprint.MachineLevelRequirement[GResourceType.Wood],
                     StorageManager.Instance.MachineLevels[GResourceType.Wood]);
                 UpdateMachineLevelText(clothMachineLevel,
-                    _selectedProp.Blueprint.MachineLevelRequirement[GResourceType.Cloth],
+                    _selectedStageObject.Blueprint.MachineLevelRequirement[GResourceType.Cloth],
                     StorageManager.Instance.MachineLevels[GResourceType.Cloth]);
                 UpdateMachineLevelText(paintMachineLevel,
-                    _selectedProp.Blueprint.MachineLevelRequirement[GResourceType.Paint],
+                    _selectedStageObject.Blueprint.MachineLevelRequirement[GResourceType.Paint],
                     StorageManager.Instance.MachineLevels[GResourceType.Paint]);
             }
             else
@@ -123,16 +151,16 @@ namespace Runtime.UserInterface
         {
             resourceBarUI.UpdateResourcesBarUI();
             
-            if (_selectedProp)
+            if (_selectedStageObject)
             {
                 woodRequirementText.text =
-                    $"{StorageManager.Instance.ResourceStorage[GResourceType.Wood]}(-{_selectedProp.Blueprint.ResourceConsumes[GResourceType.Wood]})";
+                    $"{StorageManager.Instance.ResourceStorage[GResourceType.Wood]}(-{_selectedStageObject.Blueprint.ResourceConsumes[GResourceType.Wood]})";
                 metalRequirementText.text =
-                    $"{StorageManager.Instance.ResourceStorage[GResourceType.Metal]}(-{_selectedProp.Blueprint.ResourceConsumes[GResourceType.Metal]})";
+                    $"{StorageManager.Instance.ResourceStorage[GResourceType.Metal]}(-{_selectedStageObject.Blueprint.ResourceConsumes[GResourceType.Metal]})";
                 clothRequirementText.text =
-                    $"{StorageManager.Instance.ResourceStorage[GResourceType.Cloth]}(-{_selectedProp.Blueprint.ResourceConsumes[GResourceType.Cloth]})";
+                    $"{StorageManager.Instance.ResourceStorage[GResourceType.Cloth]}(-{_selectedStageObject.Blueprint.ResourceConsumes[GResourceType.Cloth]})";
                 paintRequirementText.text =
-                    $"{StorageManager.Instance.ResourceStorage[GResourceType.Paint]}(-{_selectedProp.Blueprint.ResourceConsumes[GResourceType.Paint]})";
+                    $"{StorageManager.Instance.ResourceStorage[GResourceType.Paint]}(-{_selectedStageObject.Blueprint.ResourceConsumes[GResourceType.Paint]})";
 
             }
         }
@@ -148,7 +176,7 @@ namespace Runtime.UserInterface
             var blueprintStageObjectDict = StorageManager.Instance.BlueprintObjectDict;
             var ownedBlueprints = StorageManager.Instance.OwnedBlueprints;
             
-            _selectedProp = null;
+            _selectedStageObject = null;
             producePropButton.interactable = false;
             recycleButton.interactable = false;
             
@@ -175,27 +203,27 @@ namespace Runtime.UserInterface
 
         private void ProduceSelectedProp()
         {
-            Assert.IsNotNull(_selectedProp);
+            Assert.IsNotNull(_selectedStageObject);
             
             // add the produced prop data to the storage manager
-            if (StorageManager.Instance.TryProduceNewStageObjectViaBlueprint(_selectedProp.Blueprint, true))
+            if (StorageManager.Instance.TryProduceNewStageObjectViaBlueprint(_selectedStageObject.Blueprint, true))
             {
                 // update the prop list item curNum UI
-                _selectedProp.ProducedOneItem();
+                _selectedStageObject.ProducedOneItem();
                 // update the prop list item
-                SelectOnTargetBlueprint(_selectedProp);
+                SelectOnTargetBlueprint(_selectedStageObject);
                 // update the resources
             }
         }
 
         private void RecycleSelectedProp()
         {
-            Assert.IsNotNull(_selectedProp);
+            Assert.IsNotNull(_selectedStageObject);
         }
 
         private void AddNewStageBlueprintListItem(BaseStageObjectBlueprintSO blueprint, int curNum)
         {
-             var newPropListItemUIObject = (Instantiate(propListItemPrefab, propListTransform).GetComponent<PropListItemUIObject>());
+             var newPropListItemUIObject = (Instantiate(propListItemPrefab, propListTransform).GetComponent<StageObjectListItemUIObject>());
              
              _propListItems.Add(newPropListItemUIObject);
              
@@ -206,15 +234,17 @@ namespace Runtime.UserInterface
              newPropListItemUIObject.UpdateItemUI(blueprint, curNum, SelectOnTargetBlueprint);
         }
         
-        private void SelectOnTargetBlueprint(PropListItemUIObject uiObjectToSelect)
+        private void SelectOnTargetBlueprint(StageObjectListItemUIObject uiObjectToSelect)
         {
-            if (_selectedProp)
+            if (_selectedStageObject)
             {
-                _selectedProp.HintOnDeselected();   
+                _selectedStageObject.HintOnDeselected();   
             }
             uiObjectToSelect.HintOnSelected();
-            _selectedProp = uiObjectToSelect;
+            _selectedStageObject = uiObjectToSelect;
+            
             // also update the stage preview panel.
+            UpdateScenePreviewObject();
             
             // also update the produce button (can click or not)
             if (PurchaseManager.Instance.CanProduceBlueprintProp(uiObjectToSelect.Blueprint, out var requireMoney))
@@ -243,6 +273,63 @@ namespace Runtime.UserInterface
             
             // also update the resources requirement texts
             UpdateCurrentResourcesUI();
+        }
+
+        private void UpdateScenePreviewObject()
+        {
+            for (int i = 0; i < stageObjectPreviewParent.childCount; i++)
+            {
+                Destroy(stageObjectPreviewParent.GetChild(i).gameObject);
+            }
+
+            switch (_selectedStageObject.Blueprint.ObjectDataType)
+            {
+                case StageObjectType.Prop:
+                    if (_selectedStageObject.Blueprint is StagePropBlueprintSO propBlueprintSo)
+                    {
+                        var newObj = new GameObject("PropObject")
+                        {
+                            layer = LayerMask.NameToLayer("PreviewStage"),
+                            transform =
+                            {
+                                parent = stageObjectPreviewParent.transform,
+                                localPosition = Vector3.zero,
+                            }
+                        };
+                        var newRenderer = newObj.AddComponent<SpriteRenderer>();
+                        newRenderer.color = propBlueprintSo.SpriteTint;
+                        newRenderer.sprite = propBlueprintSo.PropSprite;
+                        newRenderer.transform.localScale =
+                            new Vector3(propBlueprintSo.PropScale.x, propBlueprintSo.PropScale.y, 1);
+                        newRenderer.sortingLayerName = "Preview";
+                        newRenderer.sortingOrder = 5;
+                    }
+                    break;
+                case StageObjectType.Actor:
+                    // Instantiate()
+                    break;
+                case StageObjectType.Orchestra:
+                    // 
+                    break;
+                case StageObjectType.Effect:
+                    if (_selectedStageObject.Blueprint is StageEffectBlueprintSO stageBlueprintSo)
+                    {
+                        var effectPrefab = Instantiate(stageBlueprintSo.EffectObjectPrefab, stageObjectPreviewParent);
+                    }
+                    break;
+                case StageObjectType.Scenery:
+                    if (_selectedStageObject.Blueprint is StageSceneryBlueprintSO sceneryBlueprintSo)
+                    {
+                        var sceneryPrefab = Instantiate(sceneryBlueprintSo.SceneryObjectPrefab, stageObjectPreviewParent);
+                    }
+                    break;
+                case StageObjectType.Light:
+                    // if (_selectedStageObject.Blueprint is  lightBlueprintSo)
+                    // {
+                    //     var sceneryPrefab = Instantiate(lightBlueprintSo., stageObjectPreviewParent);
+                    // }
+                    break; 
+            }
         }
 
         private void UpdateMachineLevelText(TextMeshProUGUI textMeshProUGUI, int requireLevel, int curLevel)

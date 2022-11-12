@@ -15,7 +15,7 @@ TagManager:
   - UI Gameplay
   - No Lighting
   - Stage Objects
-  - 
+  - PreviewStage
   - 
   - 
   - 
@@ -44,4 +44,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 2987590505
+    locked: 0
+  - name: Preview
+    uniqueID: 2290932001
     locked: 0

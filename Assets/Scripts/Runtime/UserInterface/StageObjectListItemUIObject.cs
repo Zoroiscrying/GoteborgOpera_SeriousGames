@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Runtime.UserInterface
 {
-    public class PropListItemUIObject : MonoBehaviour, IPointerClickHandler
+    public class StageObjectListItemUIObject : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private Image listItemBg;
         [SerializeField] private TextMeshProUGUI blueprintName;
@@ -16,7 +16,7 @@ namespace Runtime.UserInterface
 
         public BaseStageObjectBlueprintSO Blueprint => _blueprint;
         private BaseStageObjectBlueprintSO _blueprint;
-        private Action<PropListItemUIObject> _blueprintSelected;
+        private Action<StageObjectListItemUIObject> _blueprintSelected;
 
         public void ProducedOneItem()
         {
@@ -29,7 +29,7 @@ namespace Runtime.UserInterface
         }
         
         public void UpdateItemUI(BaseStageObjectBlueprintSO blueprint, int curNum, 
-            Action<PropListItemUIObject> onBlueprintSelected)
+            Action<StageObjectListItemUIObject> onBlueprintSelected)
         {
             blueprintName.text = blueprint.BlueprintName;
             stageObjectNum.text = curNum.ToString();

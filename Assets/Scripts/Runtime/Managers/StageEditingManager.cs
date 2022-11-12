@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Runtime.ScriptableObjects;
 using Runtime.StageDataObjects;
 using Runtime.StageEditingObjects;
@@ -60,15 +61,25 @@ namespace Runtime.Managers
         [SerializeField] private GameObject defaultStageSceneryObjectPrefab;
         
         [SerializeField] private List<GameObject> functionButtonPrefabs;
+
+        // Stage Object Data
+        public List<BaseStageObject> StageObjectsInstantiated => _stageObjectsInstantiated;
         private List<BaseStageObject> _stageObjectsInstantiated = new List<BaseStageObject>();
 
+        // list of sub-function buttons retrieved from injected function button prefabs
         private List<BaseStagePropSubfunctionButtonObject> _stagePropfunctionButtons = new List<BaseStagePropSubfunctionButtonObject>();
+        
+        // Stage Editing UI control
         [SerializeField] private StageEditingUI stageEditingUI;
 
-        private bool _canEditStageProp = true;
-        
-        private bool _shouldOpenStageEditingUI = true;
-        private bool _shouldOpenPropProducingUI = true;
+        // Whether Or Not is Editing Prop
+        private bool _canEditStageProp = true; 
+        private event Action<bool> EditingStagePropStateChanged;
+
+        // Stage Editing Singleton controls - for conditions where certain objects shouldn't exist at the same time.
+        // e.g. two scenery objects shouldn't appear at the same time.
+        [SerializeField] private Transform stageSceneryObjectParent;
+        [SerializeField] private Transform stageLightSettingObjectParent;
 
         #region Unity Events
 
@@ -94,9 +105,20 @@ namespace Runtime.Managers
 
         #endregion
 
+        public void AddEditingStageStateChangedListener(Action<bool> callback)
+        {
+            EditingStagePropStateChanged += callback;
+        }
+        
+        public void RemoveEditingStageStateChangedListener(Action<bool> callback)
+        {
+            EditingStagePropStateChanged -= callback;
+        }
+        
         public void ChangeStageEditPermission(bool canEdit)
         {
             this._canEditStageProp = canEdit;
+            EditingStagePropStateChanged?.Invoke(_canEditStageProp);
         }
 
         // todo:: instantiate props, actors and orchestras should be different.
@@ -111,7 +133,7 @@ namespace Runtime.Managers
 
         public void InstantiateNewActorToStage(BaseStageObjectData objectData, Vector2 positionXY)
         {
-
+            
         }
         
         public void InstantiateNewOrchestraToStage(BaseStageObjectData objectData, Vector2 positionXY)

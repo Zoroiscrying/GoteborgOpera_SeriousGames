@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Runtime.DataStructures;
+using Runtime.Managers;
 using Runtime.ScriptableObjects;
 using Runtime.StageDataObjects;
 using Runtime.UserInterface;
@@ -73,6 +74,8 @@ namespace Runtime.Testing
         // This list should be serialized for players
         [SerializeField] private List<BaseStageObjectData> stageObjectDataList = new List<BaseStageObjectData>();
         public List<BaseStageObjectData> StageObjectDataList => stageObjectDataList;
+        public int ProducedStageObjectCount =>
+            stageObjectDataList.Count + StageEditingManager.Instance.StageObjectsInstantiated.Count;
 
         /// <summary>
         /// For producing stage objects through blueprints
@@ -147,7 +150,7 @@ namespace Runtime.Testing
             BaseStageObjectBlueprintSO newStageObjectBluePrint, 
             bool useMoneyIfResourcesLack = false)
         {
-            if (stageObjectDataList.Count >= maxStagePropNum)
+            if (ProducedStageObjectCount >= maxStagePropNum)
             {
                 return false;
             }

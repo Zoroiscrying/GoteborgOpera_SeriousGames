@@ -1,4 +1,6 @@
-﻿using Runtime.ScriptableObjects;
+﻿using System;
+using Runtime.Managers;
+using Runtime.ScriptableObjects;
 using Runtime.StageDataObjects;
 using Runtime.Testing;
 using UnityEngine;
@@ -16,7 +18,15 @@ namespace Runtime.StageEditingObjects
             base.OnEnable();
             _spriteRenderer = GetComponent<SpriteRenderer>();
         }
-        
+
+        private void OnDisable()
+        {
+            if (gameObject.scene.isLoaded)
+            {
+                StageEditingManager.Instance.RemoveEditingStageStateChangedListener(OnEditingStageStateChangedEvent);   
+            }
+        }
+
         public override void UpdateRendererOrderInLayer(int newOrder)
         {
             this._spriteRenderer.sortingOrder = newOrder;
@@ -39,6 +49,27 @@ namespace Runtime.StageEditingObjects
             if (stageEffectBlueprintSo != null)
             {
                 Instantiate(stageEffectBlueprintSo.EffectObjectPrefab, this.transform);    
+                // subscribe event for stage editing / viewing
+                StageEditingManager.Instance.AddEditingStageStateChangedListener(OnEditingStageStateChangedEvent);
+            }
+        }
+
+        private void OnEditingStageStateChangedEvent(bool isCurrentlyEditing)
+        {
+            //Debug.Log("Editing State Changed 0");
+            if (StageObjectData is EffectStageObjectData effectStageObjectData)
+            {
+                //Debug.Log("Editing State Changed 1");
+                if (effectStageObjectData.baseStageObjectBlueprintSO is StageEffectBlueprintSO effectStageObjectSo)
+                {
+                    //Debug.Log("Editing State Changed 2" + effectStageObjectSo.EffectLayer.ToString());
+                    if (effectStageObjectSo.EffectLayer == CustomEffectLayer.WholeSceneParticleSystem
+                        || effectStageObjectSo.EffectLayer == CustomEffectLayer.ObjectParticleSystem)
+                    {
+                        //Debug.Log("Editing State Changed 3");
+                        _spriteRenderer.enabled = isCurrentlyEditing;
+                    }
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using Runtime.ScriptableObjects;
+﻿using Runtime.Managers;
+using Runtime.ScriptableObjects;
 using Runtime.Testing;
 using TMPro;
 using UnityEngine;
@@ -62,6 +63,11 @@ namespace Runtime.UserInterface
             if (PurchaseManager.Instance.TryPurchaseResource(resourceType))
             {
                 UpdateResourcesBarUI();
+                // indicate money change
+                TempUIHintManager.Instance.HintResourceChange(GResourceType.Money,
+                    -PurchaseManager.Instance.ExchangePriceDictSo.ResourceExchangeDict[resourceType]);
+                // indicate resource change
+                TempUIHintManager.Instance.HintResourceChange(resourceType, 1);
             }
             else
             {
@@ -87,9 +93,9 @@ namespace Runtime.UserInterface
             paintStorageText.text =
                 $"{StorageManager.Instance.ResourceStorage[GResourceType.Paint]}";
             storageCountText.text =
-                $"{StorageManager.Instance.StageObjectDataList.Count}/{StorageManager.Instance.MaxStagePropNum}";
+                $"{StorageManager.Instance.ProducedStageObjectCount}/{StorageManager.Instance.MaxStagePropNum}";
             storageCountText.color = 
-                StorageManager.Instance.StageObjectDataList.Count >= StorageManager.Instance.MaxStagePropNum ? Color.red : Color.black;
+                StorageManager.Instance.ProducedStageObjectCount >= StorageManager.Instance.MaxStagePropNum ? Color.red : Color.black;
         }
     }
 }
