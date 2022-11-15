@@ -42,3 +42,4 @@ MonoBehaviour:
   propScale: {x: 0.75, y: 0.75}
   propSprite: {fileID: 21300000, guid: 2bfe461859d22854b8bdf8db60c31a1f, type: 3}
   spriteTint: {r: 0.5372549, g: 0.627451, b: 0.70980394, a: 1}
+  propSoundEffect: {fileID: 8300000, guid: fec0be1584d4c2f4db8f1230a3c50c43, type: 3}

@@ -9,20 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 504cf5a00d414925a8adaa33b3775e64, type: 3}
-  m_Name: StagePropBlueprint_Gun
+  m_Script: {fileID: 11500000, guid: 50f23f381c0745b2801d4615b1c831a2, type: 3}
+  m_Name: StageOrchestraBlueprint_Scary
   m_EditorClassIdentifier: 
-  previewSprite: {fileID: 0}
-  blueprintName: Gun
+  previewSprite: {fileID: 21300000, guid: daf2ab606d4db0d4f9ecf4c02137d2a8, type: 3}
+  blueprintName: Scary Orchestra
   moneyToBuy: 0
   resourceConsumes:
     list:
     - Key: 0
-      Value: 0
+      Value: 15
     - Key: 1
-      Value: 1
+      Value: 0
     - Key: 2
-      Value: 1
+      Value: 0
     - Key: 3
       Value: 0
     - Key: 4
@@ -31,15 +31,12 @@ MonoBehaviour:
   machineLevelRequirement:
     list:
     - Key: 1
-      Value: 1
+      Value: 0
     - Key: 2
-      Value: 1
+      Value: 0
     - Key: 3
       Value: 0
     - Key: 4
       Value: 0
     keyCollision: 0
-  propScale: {x: 0.1, y: 0.1}
-  propSprite: {fileID: 21300000, guid: ce7d1f3d51f16a44bafab375aa8779e4, type: 3}
-  spriteTint: {r: 0.74509805, g: 0.41960788, b: 0.5372549, a: 1}
-  propSoundEffect: {fileID: 8300000, guid: 3a05e252374a2834fba2566e519e3dff, type: 3}
+  mainStageBgm: {fileID: 8300000, guid: 1945f37cb4570a84d835f693d70fe8ff, type: 3}

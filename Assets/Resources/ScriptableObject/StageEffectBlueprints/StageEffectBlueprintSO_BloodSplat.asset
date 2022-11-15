@@ -9,20 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 504cf5a00d414925a8adaa33b3775e64, type: 3}
-  m_Name: StagePropBlueprint_Gun
+  m_Script: {fileID: 11500000, guid: ed18f327766a4c3e8e0bce73fb94c455, type: 3}
+  m_Name: StageEffectBlueprintSO_BloodSplat
   m_EditorClassIdentifier: 
-  previewSprite: {fileID: 0}
-  blueprintName: Gun
-  moneyToBuy: 0
+  previewSprite: {fileID: 21300000, guid: 8e88614a5d2aead4998a8c70955662c6, type: 3}
+  blueprintName: Blood Splat
+  moneyToBuy: 10
   resourceConsumes:
     list:
     - Key: 0
-      Value: 0
+      Value: 5
     - Key: 1
-      Value: 1
+      Value: 0
     - Key: 2
-      Value: 1
+      Value: 0
     - Key: 3
       Value: 0
     - Key: 4
@@ -31,15 +31,16 @@ MonoBehaviour:
   machineLevelRequirement:
     list:
     - Key: 1
-      Value: 1
+      Value: 0
     - Key: 2
-      Value: 1
+      Value: 0
     - Key: 3
       Value: 0
     - Key: 4
       Value: 0
     keyCollision: 0
-  propScale: {x: 0.1, y: 0.1}
-  propSprite: {fileID: 21300000, guid: ce7d1f3d51f16a44bafab375aa8779e4, type: 3}
-  spriteTint: {r: 0.74509805, g: 0.41960788, b: 0.5372549, a: 1}
-  propSoundEffect: {fileID: 8300000, guid: 3a05e252374a2834fba2566e519e3dff, type: 3}
+  effectScale: {x: 0.3, y: 0.3}
+  effectSprite: {fileID: 21300000, guid: 40dc043bc25347445abda8890455a770, type: 3}
+  effectObjectPrefab: {fileID: 0}
+  effectLayer: 3
+  effectAmbientSound: {fileID: 0}

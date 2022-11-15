@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7623808808711044100}
   - component: {fileID: 7623808808711044101}
   m_Layer: 8
-  m_Name: Prefab_StageEffectObject_BloodDecal
+  m_Name: Prefab_StageEffectObject_BloodSplat
   m_TagString: Stage Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

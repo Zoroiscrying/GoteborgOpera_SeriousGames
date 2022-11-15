@@ -59,6 +59,7 @@ namespace Runtime.Managers
         [SerializeField] private GameObject defaultStagePropObjectPrefab;
         [SerializeField] private GameObject defaultStageEffectObjectPrefab;
         [SerializeField] private GameObject defaultStageSceneryObjectPrefab;
+        [SerializeField] private GameObject defaultStageOrchestraObjectPrefab;
         
         [SerializeField] private List<GameObject> functionButtonPrefabs;
 
@@ -80,6 +81,7 @@ namespace Runtime.Managers
         // e.g. two scenery objects shouldn't appear at the same time.
         [SerializeField] private Transform stageSceneryObjectParent;
         [SerializeField] private Transform stageLightSettingObjectParent;
+        [SerializeField] private Transform stageBgmParent;
 
         #region Unity Events
 
@@ -133,12 +135,21 @@ namespace Runtime.Managers
 
         public void InstantiateNewActorToStage(BaseStageObjectData objectData, Vector2 positionXY)
         {
-            
+            // StageActorObject
         }
         
         public void InstantiateNewOrchestraToStage(BaseStageObjectData objectData, Vector2 positionXY)
         {
+            if (stageBgmParent.childCount > 0)
+            {
+                PutObjectFromStageToStorage(stageBgmParent.GetChild(0).GetComponent<BaseStageObject>());
+            }
             
+            var stageObj = Instantiate(defaultStageOrchestraObjectPrefab,
+                new Vector3(positionXY.x, positionXY.y, (int)LayerZ.StageCenter),
+                defaultStageOrchestraObjectPrefab.transform.rotation, stageBgmParent).GetComponent<StageOrchestraObject>();
+            stageObj.InitializeFromStageObjectData(objectData);
+            _stageObjectsInstantiated.Add(stageObj);
         }
 
         public void InstantiateNewEffectToStage(BaseStageObjectData objectData, Vector2 positionXY)
@@ -159,11 +170,11 @@ namespace Runtime.Managers
             _stageObjectsInstantiated.Add(stageObj);
         }
 
-        public void PutPropFromStageToStorage(BaseStageObject propObject)
+        public void PutObjectFromStageToStorage(BaseStageObject stageObject)
         {
-            _stageObjectsInstantiated.Remove(propObject);
-            StorageManager.Instance.AddStageObjectData(propObject.StageObjectData);
-            Destroy(propObject.gameObject);
+            _stageObjectsInstantiated.Remove(stageObject);
+            StorageManager.Instance.AddStageObjectData(stageObject.StageObjectData);
+            Destroy(stageObject.gameObject);
         }
 
         public void EditingStageObject(BaseStageObject propObject, float buttonSeparateRadius)

@@ -16,6 +16,8 @@ namespace Runtime.Testing
         
         [SerializeField] private BasePropDecorator basePropDecorator;
 
+        private AudioSource _audioSource;
+
         public override void UpdateRendererOrderInLayer(int newOrder)
         {
             this._spriteRenderer.sortingOrder = newOrder;
@@ -42,7 +44,11 @@ namespace Runtime.Testing
             
             ApplyPropDecorators();
             var stagePropBlueprintSo = (propStageObjectData.baseStageObjectBlueprintSO) as StagePropBlueprintSO;
-            if (stagePropBlueprintSo != null) GetComponent<SpriteMask>().sprite = stagePropBlueprintSo.PropSprite;
+            if (stagePropBlueprintSo != null)
+            {
+                GetComponent<SpriteMask>().sprite = stagePropBlueprintSo.PropSprite;
+                _audioSource.clip = stagePropBlueprintSo.PropSoundEffect;
+            }
             GetComponent<PolygonCollider2D>().TryUpdateShapeToAttachedSprite();
         }
 
@@ -62,6 +68,7 @@ namespace Runtime.Testing
         {
             base.OnEnable();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _audioSource = GetComponent<AudioSource>();
 
             // TODO:: This should be changed to a more flexible version, where properties can be changed in the editor
             // TODO:: Might just add a list of 'customize material variable' to the base prop decorator...

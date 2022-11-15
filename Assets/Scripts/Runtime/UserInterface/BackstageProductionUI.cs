@@ -314,7 +314,10 @@ namespace Runtime.UserInterface
                 case StageObjectType.Effect:
                     if (_selectedStageObject.Blueprint is StageEffectBlueprintSO stageBlueprintSo)
                     {
-                        var effectPrefab = Instantiate(stageBlueprintSo.EffectObjectPrefab, stageObjectPreviewParent);
+                        if (stageBlueprintSo.EffectObjectPrefab)
+                        {
+                            var effectPrefab = Instantiate(stageBlueprintSo.EffectObjectPrefab, stageObjectPreviewParent);   
+                        }
                     }
                     break;
                 case StageObjectType.Scenery:

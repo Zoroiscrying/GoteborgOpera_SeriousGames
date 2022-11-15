@@ -70,6 +70,13 @@ namespace Runtime.UserInterface
         public void InitializeAsOrchestra(OrchestraStageObjectData objectData)
         {
             _stageObjectType = StageObjectType.Orchestra;
+            _objectData = objectData;
+            objectName.text = objectData.objectName;
+            var stageOrchestraBlueprintSo = (objectData.baseStageObjectBlueprintSO) as StageOrchestraBlueprintSO;
+            if (stageOrchestraBlueprintSo != null && stageOrchestraBlueprintSo.PreviewSprite)
+            {
+                propIcon.sprite = stageOrchestraBlueprintSo.PreviewSprite;
+            }
         }
 
         public void InitializeAsEffectObject(EffectStageObjectData objectData)
@@ -88,7 +95,6 @@ namespace Runtime.UserInterface
         public void InitializeAsSceneryObject(SceneryStageObjectData objectData)
         {
             _stageObjectType = StageObjectType.Scenery;
-            _stageObjectType = StageObjectType.Effect;
             _objectData = objectData;
             objectName.text = objectData.objectName;
             var stageSceneryBlueprintSo = (objectData.baseStageObjectBlueprintSO) as StageSceneryBlueprintSO;

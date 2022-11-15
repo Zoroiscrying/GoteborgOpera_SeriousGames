@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 1025327735354254471}
   - component: {fileID: 1025327735354254470}
   - component: {fileID: 1025327735354254468}
-  - component: {fileID: 5083571802229287438}
   - component: {fileID: 1579936393608703717}
   - component: {fileID: 6253016861521480192}
+  - component: {fileID: 3744905100128784283}
   m_Layer: 8
-  m_Name: Prefab_DefaultStageEffectObject
+  m_Name: Prefab_DefaultStageOrchestraObject
   m_TagString: Stage Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: ea292d445b1c4cb48897511cd9453f1c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: daf2ab606d4db0d4f9ecf4c02137d2a8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -108,22 +108,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   canBeActivated: 1
---- !u!114 &5083571802229287438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025327735354254474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f604107209364741b2c7b3be108170a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageObjectData:
-    objectName: NewStageObject
-    baseStageObjectBlueprintSO: {fileID: 0}
-    baseStageObjectBlueprintAssetPath: 
 --- !u!61 &1579936393608703717
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -162,7 +146,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.677
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -246,3 +230,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3744905100128784283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025327735354254474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e2727e4a594763ad788d65b83dbd3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageObjectData:
+    objectName: NewStageObject
+    baseStageObjectBlueprintSO: {fileID: 0}
+    baseStageObjectBlueprintAssetPath: 

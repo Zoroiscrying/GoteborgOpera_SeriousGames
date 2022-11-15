@@ -30,6 +30,10 @@ namespace Runtime.ScriptableObjects
 
         public Color SpriteTint => spriteTint;
 
+        [SerializeField] private AudioClip propSoundEffect;
+
+        public AudioClip PropSoundEffect => propSoundEffect;
+
         public override StageObjectType ObjectDataType => StageObjectType.Prop;
     }
 }

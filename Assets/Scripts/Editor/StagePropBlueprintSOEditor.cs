@@ -17,6 +17,7 @@ namespace Editor
         private SerializedProperty _blueprintNameProperty;
         private SerializedProperty _propScaleProperty;
         private SerializedProperty _spriteTintProperty;
+        private SerializedProperty _propSoundEffectProperty;
 
         private void OnEnable()
         {
@@ -27,6 +28,7 @@ namespace Editor
             _blueprintNameProperty = serializedObject.FindProperty("blueprintName");
             _propScaleProperty = serializedObject.FindProperty("propScale");
             _spriteTintProperty = serializedObject.FindProperty("spriteTint");
+            _propSoundEffectProperty = serializedObject.FindProperty("propSoundEffect");
         }
 
         public override void OnInspectorGUI()
@@ -42,6 +44,7 @@ namespace Editor
                 EditorGUILayout.PropertyField(_machineLevelRequirementProperty,
                     new GUIContent("Machine Level Requirements"));
                 EditorGUILayout.PropertyField(_spriteTintProperty, new GUIContent("Sprite Tint"));
+                EditorGUILayout.PropertyField(_propSoundEffectProperty, new GUIContent("Prop Sound Effect"));
             }
             serializedObject.ApplyModifiedProperties();
         }

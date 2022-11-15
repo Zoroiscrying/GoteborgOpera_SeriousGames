@@ -12,11 +12,13 @@ namespace Runtime.StageEditingObjects
     public class StageEffectObject : BaseStageObject
     {
         private SpriteRenderer _spriteRenderer;
+        private AudioSource _audioSource;
         
         protected override void OnEnable()
         {
             base.OnEnable();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+            _audioSource = GetComponent<AudioSource>();
         }
 
         private void OnDisable()
@@ -43,14 +45,36 @@ namespace Runtime.StageEditingObjects
             if (stageObjectData is not EffectStageObjectData effectStageObjectData) return;
             
             var stageEffectBlueprintSo = (effectStageObjectData.baseStageObjectBlueprintSO) as StageEffectBlueprintSO;
-            
-            _spriteRenderer.sprite = effectStageObjectData.baseStageObjectBlueprintSO.PreviewSprite;
-            
+
+            if (effectStageObjectData.baseStageObjectBlueprintSO.PreviewSprite)
+            {
+                _spriteRenderer.sprite = effectStageObjectData.baseStageObjectBlueprintSO.PreviewSprite;
+            }
+
             if (stageEffectBlueprintSo != null)
             {
-                Instantiate(stageEffectBlueprintSo.EffectObjectPrefab, this.transform);    
+                this.transform.localScale = new Vector3(stageEffectBlueprintSo.EffectScale.x,
+                    stageEffectBlueprintSo.EffectScale.y, 1.0f);
+                
+                if (stageEffectBlueprintSo.EffectObjectPrefab)
+                {
+                    Instantiate(stageEffectBlueprintSo.EffectObjectPrefab, this.transform);      
+                }
+
+                if (stageEffectBlueprintSo.EffectLayer == CustomEffectLayer.BackgroundDecal || 
+                    stageEffectBlueprintSo.EffectLayer == CustomEffectLayer.ObjectDecal)
+                {
+                    _spriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+                }
+                
                 // subscribe event for stage editing / viewing
                 StageEditingManager.Instance.AddEditingStageStateChangedListener(OnEditingStageStateChangedEvent);
+                
+                if (stageEffectBlueprintSo.EffectAmbientSound)
+                {
+                    _audioSource.clip = stageEffectBlueprintSo.EffectAmbientSound;
+                    _audioSource.Play();
+                }
             }
         }
 

@@ -16,7 +16,7 @@ namespace Runtime.SubfunctionObject
         {
             base.OnFunctionButtonDown();
             
-            StageEditingManager.Instance.PutPropFromStageToStorage(TargetPropObject);
+            StageEditingManager.Instance.PutObjectFromStageToStorage(TargetPropObject);
         }
     }
 }
