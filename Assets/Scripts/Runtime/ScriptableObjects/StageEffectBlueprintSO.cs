@@ -1,4 +1,5 @@
-﻿using Runtime.StageDataObjects;
+﻿using Runtime.Managers;
+using Runtime.StageDataObjects;
 using Runtime.UserInterface;
 using UnityEngine;
 
@@ -7,14 +8,14 @@ namespace Runtime.ScriptableObjects
     [CreateAssetMenu(fileName = "StageEffectBlueprintSO", menuName = "GoteborgProject/Blueprint/StageEffectBlueprint", order = 2)]
     public class StageEffectBlueprintSO : BaseStageObjectBlueprintSO
     {
-        [SerializeField] private Vector2 effectScale = Vector2.one;
+        [SerializeField] private Vector2 effectScale = Vector2.one * 0.2f;
         public Vector2 EffectScale => effectScale;
         
         [SerializeField]    
         private Sprite effectSprite;
-        public Sprite EffectSprite => effectSprite;
+        public Sprite EffectSprite => effectSprite ? effectSprite : SharedAssetsManager.Instance.CustomParticleSystemEffectSprite;
 
-        public override Sprite PreviewSprite => effectSprite;
+        public override Sprite PreviewSprite => EffectSprite;
 
         [SerializeField]
         private GameObject effectObjectPrefab;

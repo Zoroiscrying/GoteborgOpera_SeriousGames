@@ -36,7 +36,8 @@ namespace Runtime.Testing
 
         // simple hint text
         [SerializeField] private RectTransform hintTextRect;
-        
+        private float _hintTextInvisibleTimer = 5.0f;
+
         // resource change hint
         [SerializeField] private GameObject resourceChangeHintTextPrefab;
         [SerializeField] private RectTransform moneyResTransform;
@@ -49,10 +50,27 @@ namespace Runtime.Testing
         {
             hintTextRect.gameObject.GetComponentInChildren<TextMeshProUGUI>().text = text;
             hintTextRect.gameObject.SetActive(true);
+            _hintTextInvisibleTimer = 5.0f;
+
+            hintTextRect.anchoredPosition = new Vector2(1920.0f, -100.0f);
+            hintTextRect.DOLocalMoveX(0.0f, 0.5f).SetEase(Ease.InOutExpo);
             
             // stop the current coroutine and start a new one
-            StopCoroutine(DisableHintTextCoroutine());
-            StartCoroutine(DisableHintTextCoroutine());
+            // StopCoroutine(DisableHintTextCoroutine());
+            // StartCoroutine(DisableHintTextCoroutine());
+        }
+
+        private void Update()
+        {
+            if (_hintTextInvisibleTimer > 0.0f)
+            {
+                _hintTextInvisibleTimer -= Time.deltaTime;   
+            }
+            else if (hintTextRect.gameObject.activeSelf)
+            {
+                _hintTextInvisibleTimer = 0.0f;
+                hintTextRect.gameObject.SetActive(false);
+            }
         }
 
         public void HintResourceChange(GResourceType type, int delta)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Runtime.Testing;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Runtime.UserInterface
@@ -10,6 +11,8 @@ namespace Runtime.UserInterface
         [SerializeField] private RectTransform frontStageViewingPanel;
     
         [SerializeField] private Button sidePanelExpandButton;
+        [SerializeField] private Sprite spriteUnexpanded;
+        [SerializeField] private Sprite spriteExpanded;
         
         [SerializeField] private Button personalProfileButton;
         [SerializeField] private Button visitOperasButton;
@@ -56,16 +59,17 @@ namespace Runtime.UserInterface
         {
             bool targetActive = !sideExpandedPanel.gameObject.activeSelf;
             sideExpandedPanel.gameObject.SetActive(targetActive);
+            sidePanelExpandButton.GetComponent<Image>().sprite = targetActive ? spriteExpanded : spriteUnexpanded;
         }
 
         private void OpenProfilePage()
         {
-            
+            TempUIHintManager.Instance.HintText("Content to be developed :)");   
         }
 
         private void VisitOtherOpera()
         {
-            
+            TempUIHintManager.Instance.HintText("Content to be developed :)");   
         }
 
         private void SwitchToBackstage()
@@ -76,7 +80,7 @@ namespace Runtime.UserInterface
 
         private void OpenQuestsPage()
         {
-            
+            // this is implemented via editor button event
         }
 
         private void QuitGame()
@@ -94,12 +98,12 @@ namespace Runtime.UserInterface
 
         private void SettingsPanel()
         {
-            
+            TempUIHintManager.Instance.HintText("Content to be developed :)");   
         }
 
         private void ShareGame()
         {
-            
+            TempUIHintManager.Instance.HintText("Content to be developed :)");   
         }
     }
 }

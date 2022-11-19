@@ -76,6 +76,7 @@ namespace Runtime.Managers
         // Whether Or Not is Editing Prop
         private bool _canEditStageProp = true; 
         private event Action<bool> EditingStagePropStateChanged;
+        private event Action SwitchToBackstage;
 
         // Stage Editing Singleton controls - for conditions where certain objects shouldn't exist at the same time.
         // e.g. two scenery objects shouldn't appear at the same time.
@@ -111,10 +112,25 @@ namespace Runtime.Managers
         {
             EditingStagePropStateChanged += callback;
         }
+
+        public void AddSwitchToBackStageListener(Action callback)
+        {
+            SwitchToBackstage += callback;
+        }
         
         public void RemoveEditingStageStateChangedListener(Action<bool> callback)
         {
             EditingStagePropStateChanged -= callback;
+        }
+        
+        public void RemoveSwitchToBackStageListener(Action callback)
+        {
+            SwitchToBackstage -= callback;
+        }
+
+        public void NotifySwitchToBackStage()
+        {
+            SwitchToBackstage?.Invoke();
         }
         
         public void ChangeStageEditPermission(bool canEdit)
@@ -123,6 +139,7 @@ namespace Runtime.Managers
             EditingStagePropStateChanged?.Invoke(_canEditStageProp);
         }
 
+        #region Stage Object Instantiation
         // todo:: instantiate props, actors and orchestras should be different.
         public void InstantiateNewPropToStage(BaseStageObjectData objectData, Vector2 positionXY)
         {
@@ -169,6 +186,8 @@ namespace Runtime.Managers
             stageObj.InitializeFromStageObjectData(objectData);
             _stageObjectsInstantiated.Add(stageObj);
         }
+
+        #endregion
 
         public void PutObjectFromStageToStorage(BaseStageObject stageObject)
         {
@@ -227,5 +246,4 @@ namespace Runtime.Managers
             }
         }
     }
-    
 }

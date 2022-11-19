@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed18f327766a4c3e8e0bce73fb94c455, type: 3}
   m_Name: StageEffectBlueprintSO_BloodSplat
   m_EditorClassIdentifier: 
-  previewSprite: {fileID: 21300000, guid: 8e88614a5d2aead4998a8c70955662c6, type: 3}
+  previewSprite: {fileID: 21300000, guid: 40dc043bc25347445abda8890455a770, type: 3}
   blueprintName: Blood Splat
   moneyToBuy: 10
   resourceConsumes:

@@ -170,7 +170,7 @@ namespace Runtime.Testing
                 }
                 else
                 {
-                    //todo:: notify that money can be used to build the prop
+                    TempUIHintManager.Instance.HintText("Storage is Full!");   
                     return false;   
                 }
             }

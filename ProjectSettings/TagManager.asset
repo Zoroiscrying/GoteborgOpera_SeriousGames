@@ -16,7 +16,7 @@ TagManager:
   - No Lighting
   - Stage Objects
   - PreviewStage
-  - 
+  - EntryPage
   - 
   - 
   - 
@@ -47,4 +47,7 @@ TagManager:
     locked: 0
   - name: Preview
     uniqueID: 2290932001
+    locked: 0
+  - name: EntryPage
+    uniqueID: 649022161
     locked: 0

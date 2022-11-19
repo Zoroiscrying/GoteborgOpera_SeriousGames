@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Runtime.Managers;
 using Runtime.ScriptableObjects;
 using Runtime.Testing;
 using TMPro;
@@ -118,6 +119,7 @@ namespace Runtime.UserInterface
             backStageViewUI.BackStageViewHomePage();
             
             previewShotCamera.enabled = false;
+            ClearPreviewObjects();
             stagePreviewSceneObjects.gameObject.SetActive(false);
         }
         
@@ -214,6 +216,13 @@ namespace Runtime.UserInterface
                 SelectOnTargetBlueprint(_selectedStageObject);
                 // update the resources
             }
+            else
+            {
+                if (StorageManager.Instance.ProducedStageObjectCount >= StorageManager.Instance.MaxStagePropNum)
+                {
+                    TempUIHintManager.Instance.HintText("Storage is Full!");   
+                }
+            }
         }
 
         private void RecycleSelectedProp()
@@ -277,11 +286,8 @@ namespace Runtime.UserInterface
 
         private void UpdateScenePreviewObject()
         {
-            for (int i = 0; i < stageObjectPreviewParent.childCount; i++)
-            {
-                Destroy(stageObjectPreviewParent.GetChild(i).gameObject);
-            }
-
+            ClearPreviewObjects();
+            
             switch (_selectedStageObject.Blueprint.ObjectDataType)
             {
                 case StageObjectType.Prop:
@@ -309,14 +315,35 @@ namespace Runtime.UserInterface
                     // Instantiate()
                     break;
                 case StageObjectType.Orchestra:
-                    // 
+                    if (_selectedStageObject.Blueprint is StageOrchestraBlueprintSO orchestraBlueprintSo)
+                    {
+                        if (orchestraBlueprintSo.MainStageBgm)
+                        {
+                            var orchestraPrefab = Instantiate(SharedAssetsManager.Instance.PreviewStageObjectPrefab,
+                                stageObjectPreviewParent);
+                            orchestraPrefab.GetComponent<SpriteRenderer>().sprite =
+                                SharedAssetsManager.Instance.CustomOrchestraSprite;
+                            var audioSource = orchestraPrefab.AddComponent<AudioSource>();
+                            audioSource.clip = orchestraBlueprintSo.MainStageBgm;
+                            audioSource.Play();
+                        }
+                    }
                     break;
                 case StageObjectType.Effect:
-                    if (_selectedStageObject.Blueprint is StageEffectBlueprintSO stageBlueprintSo)
+                    if (_selectedStageObject.Blueprint is StageEffectBlueprintSO stageEffectBlueprintSo)
                     {
-                        if (stageBlueprintSo.EffectObjectPrefab)
+                        if (stageEffectBlueprintSo.EffectObjectPrefab)
                         {
-                            var effectPrefab = Instantiate(stageBlueprintSo.EffectObjectPrefab, stageObjectPreviewParent);   
+                            var effectPrefab = Instantiate(stageEffectBlueprintSo.EffectObjectPrefab, stageObjectPreviewParent);   
+                        }
+                        else
+                        {
+                            var effectPrefab = Instantiate(SharedAssetsManager.Instance.PreviewStageObjectPrefab,
+                                stageObjectPreviewParent);
+                            effectPrefab.GetComponent<SpriteRenderer>().sprite =
+                                stageEffectBlueprintSo.EffectSprite;
+                            effectPrefab.transform.localScale =
+                                new Vector3(stageEffectBlueprintSo.EffectScale.x, stageEffectBlueprintSo.EffectScale.y, 1);
                         }
                     }
                     break;
@@ -332,6 +359,14 @@ namespace Runtime.UserInterface
                     //     var sceneryPrefab = Instantiate(lightBlueprintSo., stageObjectPreviewParent);
                     // }
                     break; 
+            }
+        }
+
+        private void ClearPreviewObjects()
+        {
+            for (int i = 0; i < stageObjectPreviewParent.childCount; i++)
+            {
+                Destroy(stageObjectPreviewParent.GetChild(i).gameObject);
             }
         }
 

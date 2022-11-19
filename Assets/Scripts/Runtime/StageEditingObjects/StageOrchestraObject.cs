@@ -66,6 +66,9 @@ namespace Runtime.StageEditingObjects
             {
                 _spriteRenderer.enabled = isCurrentlyEditing;
             }
+            // determine if the orchestra should be played.
+            _audioSource.Stop();
+            _audioSource.Play();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Runtime.Managers;
 using Runtime.ScriptableObjects;
 using TMPro;
 using UnityEngine;
@@ -40,12 +41,12 @@ namespace Runtime.UserInterface
 
         public void HintOnSelected()
         {
-            listItemBg.color = new Color(0.714f, 0.387f, 0.852f);
+            listItemBg.color = SharedAssetsManager.Instance.PinkContrastColor;
         }
 
         public void HintOnDeselected()
         {
-            listItemBg.color = Color.white;
+            listItemBg.color = SharedAssetsManager.Instance.OptionalWhiteColor;
         }
 
         public void OnPointerClick(PointerEventData eventData)

@@ -48,6 +48,13 @@ namespace Runtime.Testing
             {
                 GetComponent<SpriteMask>().sprite = stagePropBlueprintSo.PropSprite;
                 _audioSource.clip = stagePropBlueprintSo.PropSoundEffect;
+                _stageTouchablePropObject.SubscribeOnObjectButtonDown(() =>
+                {
+                    if (!_audioSource.isPlaying)
+                    {
+                        _audioSource.Play();
+                    }
+                });
             }
             GetComponent<PolygonCollider2D>().TryUpdateShapeToAttachedSprite();
         }

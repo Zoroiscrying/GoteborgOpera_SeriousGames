@@ -92,6 +92,7 @@ namespace Runtime.UserInterface
 
         private void IndicateNotEnoughMoney()
         {
+            TempUIHintManager.Instance.HintText("Not enough money to upgrade the machine!");
             // not implemented here, should be implemented else where...
         }
 

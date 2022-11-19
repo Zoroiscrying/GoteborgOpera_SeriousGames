@@ -57,6 +57,7 @@ namespace Runtime.UserInterface
             var stagePropBlueprintSo = (objectData.baseStageObjectBlueprintSO) as StagePropBlueprintSO;
             if (stagePropBlueprintSo != null)
             {
+                objectName.text = stagePropBlueprintSo.BlueprintName;
                 propIcon.sprite = stagePropBlueprintSo.PropSprite ? stagePropBlueprintSo.PropSprite
                     : SharedAssetsManager.Instance.CustomPropObjectSprite;   
             }
@@ -75,6 +76,7 @@ namespace Runtime.UserInterface
             var stageOrchestraBlueprintSo = (objectData.baseStageObjectBlueprintSO) as StageOrchestraBlueprintSO;
             if (stageOrchestraBlueprintSo != null && stageOrchestraBlueprintSo.PreviewSprite)
             {
+                objectName.text = stageOrchestraBlueprintSo.BlueprintName;
                 propIcon.sprite = stageOrchestraBlueprintSo.PreviewSprite;
             }
         }
@@ -87,6 +89,7 @@ namespace Runtime.UserInterface
             var stageEffectBlueprintSo = (objectData.baseStageObjectBlueprintSO) as StageEffectBlueprintSO;
             if (stageEffectBlueprintSo != null)
             {
+                objectName.text = stageEffectBlueprintSo.BlueprintName;
                 propIcon.sprite = stageEffectBlueprintSo.EffectSprite ? stageEffectBlueprintSo.EffectSprite
                     : SharedAssetsManager.Instance.CustomParticleSystemEffectSprite;   
             }
@@ -100,6 +103,7 @@ namespace Runtime.UserInterface
             var stageSceneryBlueprintSo = (objectData.baseStageObjectBlueprintSO) as StageSceneryBlueprintSO;
             if (stageSceneryBlueprintSo != null)
             {
+                objectName.text = stageSceneryBlueprintSo.BlueprintName;
                 previewTexture.texture = stageSceneryBlueprintSo.SceneryPreviewTexture;
             }
         }

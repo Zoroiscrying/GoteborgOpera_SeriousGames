@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Editor
 {
-    [CustomEditor(typeof(StagePropBlueprintSO))]
+    [CustomEditor(typeof(StagePropBlueprintSO)), CanEditMultipleObjects]
     public class StagePropBlueprintSOEditor : UnityEditor.Editor
     {
         private StagePropBlueprintSO _instance;

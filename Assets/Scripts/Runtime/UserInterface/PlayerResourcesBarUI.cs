@@ -77,6 +77,7 @@ namespace Runtime.UserInterface
 
         private void IndicateNotEnoughMoney()
         {
+            TempUIHintManager.Instance.HintText("Not Enough Money!");
             moneyStorageText.color = Color.gray;
         }
 
@@ -95,7 +96,8 @@ namespace Runtime.UserInterface
             storageCountText.text =
                 $"{StorageManager.Instance.ProducedStageObjectCount}/{StorageManager.Instance.MaxStagePropNum}";
             storageCountText.color = 
-                StorageManager.Instance.ProducedStageObjectCount >= StorageManager.Instance.MaxStagePropNum ? Color.red : Color.black;
+                StorageManager.Instance.ProducedStageObjectCount >= StorageManager.Instance.MaxStagePropNum ? 
+                    SharedAssetsManager.Instance.PinkContrastColor : SharedAssetsManager.Instance.TextColor;
         }
     }
 }

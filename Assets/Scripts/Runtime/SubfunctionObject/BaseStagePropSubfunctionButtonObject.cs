@@ -6,8 +6,8 @@ namespace Runtime.SubfunctionObject
 {
     public class BaseStagePropSubfunctionButtonObject : BaseTouchable2DObject
     {
-        [SerializeField] private SpriteRenderer buttonSpriteRenderer;
-        [SerializeField] private Collider2D buttonCollider;
+        [SerializeField] protected SpriteRenderer buttonSpriteRenderer;
+        [SerializeField] protected Collider2D buttonCollider;
         // public Sprite ButtonSprite => buttonSprite;
 
         protected Transform TargetTransform;

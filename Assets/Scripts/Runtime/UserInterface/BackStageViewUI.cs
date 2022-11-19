@@ -56,6 +56,7 @@ namespace Runtime.UserInterface
         {
             backStageParentPanel.gameObject.SetActive(true);
             backStageViewPanel.gameObject.SetActive(true);
+            StageEditingManager.Instance.NotifySwitchToBackStage();
         }
 
         public void BackStageViewHomePage()
