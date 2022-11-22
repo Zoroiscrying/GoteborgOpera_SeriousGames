@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using Runtime.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -55,7 +56,12 @@ namespace Runtime.Testing
             }
             
             canvasGroupToShowWhenStart.DOFade(1.0f, 0.5f).SetEase(Ease.OutQuad).SetDelay(1.0f);
-            DOVirtual.DelayedCall(1.0f, () => this.transform.gameObject.SetActive(false));
+            DOVirtual.DelayedCall(1.0f, () =>
+            {
+                this.transform.gameObject.SetActive(false);
+                StageEditingManager.Instance.ChangeStageEditPermission(false);
+            });
+            
         }
 
         private void ShowGameHint()

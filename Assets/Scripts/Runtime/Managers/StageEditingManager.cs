@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using Runtime.ScriptableObjects;
 using Runtime.StageDataObjects;
 using Runtime.StageEditingObjects;
@@ -55,6 +56,7 @@ namespace Runtime.Managers
         #endregion
 
         // Template Prefabs
+        [Header("Template Prefabs")]
         [FormerlySerializedAs("defaultStageObjectPrefab")] 
         [SerializeField] private GameObject defaultStagePropObjectPrefab;
         [SerializeField] private GameObject defaultStageEffectObjectPrefab;
@@ -62,7 +64,7 @@ namespace Runtime.Managers
         [SerializeField] private GameObject defaultStageOrchestraObjectPrefab;
         
         [SerializeField] private List<GameObject> functionButtonPrefabs;
-
+        
         // Stage Object Data
         public List<BaseStageObject> StageObjectsInstantiated => _stageObjectsInstantiated;
         private List<BaseStageObject> _stageObjectsInstantiated = new List<BaseStageObject>();
@@ -71,6 +73,7 @@ namespace Runtime.Managers
         private List<BaseStagePropSubfunctionButtonObject> _stagePropfunctionButtons = new List<BaseStagePropSubfunctionButtonObject>();
         
         // Stage Editing UI control
+        [Header("Stage Edit UI Control")]
         [SerializeField] private StageEditingUI stageEditingUI;
 
         // Whether Or Not is Editing Prop
@@ -78,11 +81,17 @@ namespace Runtime.Managers
         private event Action<bool> EditingStagePropStateChanged;
         private event Action SwitchToBackstage;
 
+        [Header("Instantiation Parents")]
         // Stage Editing Singleton controls - for conditions where certain objects shouldn't exist at the same time.
         // e.g. two scenery objects shouldn't appear at the same time.
         [SerializeField] private Transform stageSceneryObjectParent;
         [SerializeField] private Transform stageLightSettingObjectParent;
         [SerializeField] private Transform stageBgmParent;
+
+        [Header("Animation Control")] 
+        [SerializeField] private List<SpriteRenderer> frontCurtainList;
+        [SerializeField] private List<SpriteRenderer> frontCurtainFoldedList;
+        [SerializeField] private List<SpriteRenderer> backCurtainList;
 
         #region Unity Events
 
@@ -128,15 +137,52 @@ namespace Runtime.Managers
             SwitchToBackstage -= callback;
         }
 
+        /// <summary>
+        /// Switch from front stage to back stage, should close the curtains
+        /// </summary>
         public void NotifySwitchToBackStage()
         {
             SwitchToBackstage?.Invoke();
+            
+            foreach (var spriteRenderer in frontCurtainList)
+            {
+                spriteRenderer.DOFade(1f, 1.0f);
+            }
+            
+            foreach (var spriteRenderer in frontCurtainFoldedList)
+            {
+                spriteRenderer.DOFade(0f, 1.0f);
+            }
+            
+            foreach (var spriteRenderer in backCurtainList)
+            {
+                spriteRenderer.DOFade(1f, 1.0f);
+            }
         }
         
+        /// <summary>
+        /// Switch from back stage to front stage view, with canEdit true or false
+        /// </summary>
+        /// <param name="canEdit"></param>
         public void ChangeStageEditPermission(bool canEdit)
         {
             this._canEditStageProp = canEdit;
             EditingStagePropStateChanged?.Invoke(_canEditStageProp);
+            
+            foreach (var spriteRenderer in frontCurtainList)
+            {
+                spriteRenderer.DOFade(0f, 1.0f);
+            }
+            
+            foreach (var spriteRenderer in frontCurtainFoldedList)
+            {
+                spriteRenderer.DOFade(1f, 1.0f);
+            }
+            
+            foreach (var spriteRenderer in backCurtainList)
+            {
+                spriteRenderer.DOFade(0f, 1.0f);
+            }
         }
 
         #region Stage Object Instantiation

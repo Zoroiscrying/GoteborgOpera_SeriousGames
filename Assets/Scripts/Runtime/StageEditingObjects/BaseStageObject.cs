@@ -40,6 +40,11 @@ namespace Runtime.Testing
             // this._spriteRenderer.sortingOrder = newOrder;
         }
 
+        public virtual void FlipRenderer()
+        {
+            // 
+        }
+
         /// <summary>
         /// Injects the blueprint scriptable obj to this object
         /// </summary>

@@ -22,7 +22,7 @@ namespace Runtime.SubfunctionObject
         {
             buttonSpriteRenderer.color = Color.white;
         }
-        
+
         public void ReactivateButton()
         {
             PointerDown = false;

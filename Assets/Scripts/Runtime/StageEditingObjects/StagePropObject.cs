@@ -22,7 +22,12 @@ namespace Runtime.Testing
         {
             this._spriteRenderer.sortingOrder = newOrder;
         }
-        
+
+        public override void FlipRenderer()
+        {
+            this._spriteRenderer.flipX = !this._spriteRenderer.flipX;
+        }
+
         /// <summary>
         /// This function is to be called when a prop from a prop list is instantiated.
         /// </summary>

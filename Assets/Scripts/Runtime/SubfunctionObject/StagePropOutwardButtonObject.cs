@@ -9,7 +9,7 @@ namespace Runtime.SubfunctionObject
     {
         protected override void DetermineInteractable()
         {
-            canBeActivated = !TargetPropObject.IsLocked;
+            canBeActivated = !TargetPropObject.IsLocked && TargetPropObject.CurLayerZCoord != LayerZ.StageFront;
             base.DetermineInteractable();
         }
         

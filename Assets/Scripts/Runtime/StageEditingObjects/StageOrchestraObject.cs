@@ -55,6 +55,7 @@ namespace Runtime.StageEditingObjects
             {
                 // subscribe event for stage editing / viewing
                 StageEditingManager.Instance.AddEditingStageStateChangedListener(OnEditingStageStateChangedEvent);
+                OnEditingStageStateChangedEvent(true);
                 _audioSource.clip = stageEffectBlueprintSo.MainStageBgm;
                 _audioSource.Play();
             }

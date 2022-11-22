@@ -31,7 +31,7 @@ namespace Runtime.ScriptableObjects
     
     public class BaseStageObjectBlueprintSO : ScriptableObject, IComparable
     {
-        [SerializeField] private Sprite previewSprite;
+        [SerializeField] protected Sprite previewSprite;
 
         public virtual Sprite PreviewSprite => previewSprite;
 

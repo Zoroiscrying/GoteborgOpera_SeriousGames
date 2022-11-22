@@ -1,4 +1,5 @@
-﻿using Runtime.UserInterface;
+﻿using Runtime.Managers;
+using Runtime.UserInterface;
 using UnityEngine;
 
 namespace Runtime.ScriptableObjects
@@ -7,6 +8,8 @@ namespace Runtime.ScriptableObjects
     public class StageOrchestraBlueprintSO : BaseStageObjectBlueprintSO
     {
         [SerializeField] private AudioClip mainStageBgm;
+        
+        public override Sprite PreviewSprite => previewSprite ? previewSprite : SharedAssetsManager.Instance.CustomOrchestraSprite;
 
         public AudioClip MainStageBgm => mainStageBgm;
         
