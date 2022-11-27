@@ -1,5 +1,6 @@
 ﻿using Runtime.Testing;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Runtime.UserInterface
@@ -20,8 +21,8 @@ namespace Runtime.UserInterface
         [SerializeField] private Button questsButton;
         [SerializeField] private Button quitButton;
         [SerializeField] private Button settingsButton;
-        [SerializeField] private Button shareButton;
-        // [SerializeField] private Button unknownButton;
+        [FormerlySerializedAs("shareButton")] [SerializeField] private Button purchaseButton;
+        [SerializeField] private Button aboutButton;
 
         [SerializeField] private RectTransform sideExpandedPanel;
 
@@ -33,7 +34,8 @@ namespace Runtime.UserInterface
             goToBackstageButton.onClick.AddListener(SwitchToBackstage);
             questsButton.onClick.AddListener(OpenQuestsPage);
             settingsButton.onClick.AddListener(SettingsPanel);
-            shareButton.onClick.AddListener(ShareGame);
+            purchaseButton.onClick.AddListener(PurchasePanel);
+            aboutButton.onClick.AddListener(AboutPanel);
             quitButton.onClick.AddListener(QuitGame);
         }
 
@@ -45,7 +47,8 @@ namespace Runtime.UserInterface
             goToBackstageButton.onClick.RemoveListener(SwitchToBackstage);
             questsButton.onClick.RemoveListener(OpenQuestsPage);
             settingsButton.onClick.RemoveListener(SettingsPanel);
-            shareButton.onClick.RemoveListener(ShareGame);
+            purchaseButton.onClick.RemoveListener(PurchasePanel);
+            aboutButton.onClick.RemoveListener(AboutPanel);
             quitButton.onClick.RemoveListener(QuitGame);
         }
 
@@ -64,18 +67,24 @@ namespace Runtime.UserInterface
 
         private void OpenProfilePage()
         {
-            TempUIHintManager.Instance.HintText("Content to be developed :)");   
+            TempUIHintManager.Instance.HintText("You can customize your profile in this page.");   
         }
 
         private void VisitOtherOpera()
         {
-            TempUIHintManager.Instance.HintText("Content to be developed :)");   
+            TempUIHintManager.Instance.HintText("You can visit other operas in this page and receive rewards accordingly.");   
         }
 
         private void SwitchToBackstage()
         {
             frontStageViewingPanel.gameObject.SetActive(false);
             backStageViewUI.SwitchFrontStageToBackStage();
+        }
+
+        private void AboutPanel()
+        {
+            // this is going to open up the developers panel
+            
         }
 
         private void OpenQuestsPage()
@@ -98,12 +107,12 @@ namespace Runtime.UserInterface
 
         private void SettingsPanel()
         {
-            TempUIHintManager.Instance.HintText("Content to be developed :)");   
+            TempUIHintManager.Instance.HintText("You can control the audio/game/other settings in this panel");   
         }
 
-        private void ShareGame()
+        private void PurchasePanel()
         {
-            TempUIHintManager.Instance.HintText("Content to be developed :)");   
+            TempUIHintManager.Instance.HintText("In purchase panel, you can see the blueprints you can buy.");   
         }
     }
 }

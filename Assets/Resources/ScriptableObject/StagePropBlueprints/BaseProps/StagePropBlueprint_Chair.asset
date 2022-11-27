@@ -39,6 +39,7 @@ MonoBehaviour:
     - Key: 4
       Value: 0
     keyCollision: 0
-  propScale: {x: 0.3, y: 0.3}
-  propSprite: {fileID: 21300000, guid: ef799f49044bcae49b4e2e8d611907e1, type: 3}
-  spriteTint: {r: 0.7735849, g: 0.21456033, b: 0.21456033, a: 1}
+  propScale: {x: 1, y: 1}
+  propSprite: {fileID: -1935088021, guid: 7ed0d0e98b4a58a49a176ce55d2f0764, type: 3}
+  spriteTint: {r: 1, g: 1, b: 1, a: 1}
+  propSoundEffect: {fileID: 0}

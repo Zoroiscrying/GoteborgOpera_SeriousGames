@@ -11,6 +11,7 @@ namespace Runtime.SubfunctionObject
         {
             canBeActivated = true;
             base.DetermineInteractable();
+            buttonSpriteRenderer.sprite = TargetPropObject.IsLocked ? unlockedSprite : lockedSprite;
         }
         
         protected override void OnFunctionButtonDown()
@@ -19,6 +20,11 @@ namespace Runtime.SubfunctionObject
 
             TargetPropObject.IsLocked = !TargetPropObject.IsLocked;
             buttonSpriteRenderer.sprite = TargetPropObject.IsLocked ? unlockedSprite : lockedSprite;
+        }
+
+        protected override bool IfButtonCanAppear()
+        {
+            return base.IfButtonCanAppear();
         }
     }
 }

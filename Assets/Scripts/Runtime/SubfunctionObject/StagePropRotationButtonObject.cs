@@ -1,4 +1,5 @@
-﻿using Runtime.Testing;
+﻿using Runtime.StageDataObjects;
+using Runtime.Testing;
 using UnityEngine;
 
 namespace Runtime.SubfunctionObject
@@ -48,7 +49,7 @@ namespace Runtime.SubfunctionObject
         protected override bool IfButtonCanAppear()
         {
             // if it's not scenery, the button can appear and inwarding or outwarding the object
-            return TargetPropObject.StageObjectData is not SceneryStageObjectData;
+            return (TargetPropObject.StageObjectData is PropStageObjectData or EffectStageObjectData);
         }
     }
 }

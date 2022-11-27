@@ -23,6 +23,8 @@ namespace Runtime.UserInterface
         [SerializeField] private Button toggleEffectDisplayButton;
         [SerializeField] private Button toggleSceneryDisplayButton;
         [SerializeField] private Button toggleLightDisplayButton;
+        
+        [SerializeField] private Button shareButton;
 
         [SerializeField] private StageObjectType stageObjectTypesToDisplay = (StageObjectType)~0;
         
@@ -35,6 +37,10 @@ namespace Runtime.UserInterface
             toggleEffectDisplayButton.onClick.AddListener(ToggleEffectFlag);
             toggleSceneryDisplayButton.onClick.AddListener(ToggleSceneryFlag);
             toggleLightDisplayButton.onClick.AddListener(ToggleLightFlag);
+            shareButton.onClick.AddListener(() =>
+            {
+                TempUIHintManager.Instance.HintText("This will help share your screen/video clip to other people.");
+            });
         }
 
         private void OnDisable()
@@ -46,6 +52,7 @@ namespace Runtime.UserInterface
             toggleEffectDisplayButton.onClick.RemoveListener(ToggleEffectFlag);
             toggleSceneryDisplayButton.onClick.RemoveListener(ToggleSceneryFlag);
             toggleLightDisplayButton.onClick.RemoveListener(ToggleLightFlag);
+            shareButton.onClick.RemoveAllListeners();
         }
 
         public void StartStageEditingUI()

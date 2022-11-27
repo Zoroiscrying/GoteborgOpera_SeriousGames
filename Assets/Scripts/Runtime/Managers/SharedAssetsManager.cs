@@ -39,6 +39,10 @@ namespace Runtime.Managers
         [SerializeField] private Sprite customPropObjectSprite;
         public Sprite CustomPropObjectSprite => customPropObjectSprite;
 
+        [SerializeField] private Sprite customLightObjectSprite;
+
+        public Sprite CustomLightObjectSprite => customLightObjectSprite;
+
         [SerializeField] private GameObject previewStageObjectPrefab;
 
         public GameObject PreviewStageObjectPrefab => previewStageObjectPrefab;

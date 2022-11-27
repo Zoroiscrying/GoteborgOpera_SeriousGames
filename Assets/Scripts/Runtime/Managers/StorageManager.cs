@@ -140,6 +140,33 @@ namespace Runtime.Testing
             StageEditingUI.InitializeStageEditingUIList(stageObjectDataList);
         }
 
+        public bool TryRecycleStageObjectOfSpecificBlueprint(BaseStageObjectBlueprintSO blueprintSo)
+        {
+            if (blueprintSo == null)
+            {
+                return false;
+            }
+            var count = BlueprintObjectDict[blueprintSo].Count;
+            if (count > 0)
+            {
+                // select the last one of the object list
+                var stageObjectToRecycle = BlueprintObjectDict[blueprintSo][count - 1];
+
+                ResourceStorage[GResourceType.Wood] +=
+                    stageObjectToRecycle.baseStageObjectBlueprintSO.ResourceConsumes[GResourceType.Wood];
+                ResourceStorage[GResourceType.Metal] +=
+                    stageObjectToRecycle.baseStageObjectBlueprintSO.ResourceConsumes[GResourceType.Metal];
+                ResourceStorage[GResourceType.Cloth] +=
+                    stageObjectToRecycle.baseStageObjectBlueprintSO.ResourceConsumes[GResourceType.Cloth];
+                ResourceStorage[GResourceType.Paint] +=
+                    stageObjectToRecycle.baseStageObjectBlueprintSO.ResourceConsumes[GResourceType.Paint];
+                
+                BlueprintObjectDict[blueprintSo].RemoveAt(count-1);
+            }
+            
+            return true;
+        }
+        
         /// <summary>
         /// Add a new stage object to the storage list
         /// </summary>

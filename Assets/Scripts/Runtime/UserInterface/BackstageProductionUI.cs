@@ -228,6 +228,17 @@ namespace Runtime.UserInterface
         private void RecycleSelectedProp()
         {
             Assert.IsNotNull(_selectedStageObject);
+            
+            if (_selectedStageObject)
+            {
+                if (StorageManager.Instance.TryRecycleStageObjectOfSpecificBlueprint(_selectedStageObject.Blueprint))
+                {
+                    // update the prop list item curNum UI
+                    _selectedStageObject.RecycledOneItem();
+                    // update the prop list item
+                    SelectOnTargetBlueprint(_selectedStageObject);
+                }
+            }
         }
 
         private void AddNewStageBlueprintListItem(BaseStageObjectBlueprintSO blueprint, int curNum)
@@ -287,6 +298,8 @@ namespace Runtime.UserInterface
         private void UpdateScenePreviewObject()
         {
             ClearPreviewObjects();
+
+            if (!_selectedStageObject) return;
             
             switch (_selectedStageObject.Blueprint.ObjectDataType)
             {
@@ -354,10 +367,10 @@ namespace Runtime.UserInterface
                     }
                     break;
                 case StageObjectType.Light:
-                    // if (_selectedStageObject.Blueprint is  lightBlueprintSo)
-                    // {
-                    //     var sceneryPrefab = Instantiate(lightBlueprintSo., stageObjectPreviewParent);
-                    // }
+                    if (_selectedStageObject.Blueprint is StageLightSettingBlueprintSO lightBlueprintSo)
+                    {
+                        var sceneryPrefab = Instantiate(lightBlueprintSo.LightObjectPrefab, stageObjectPreviewParent);
+                    }
                     break; 
             }
         }

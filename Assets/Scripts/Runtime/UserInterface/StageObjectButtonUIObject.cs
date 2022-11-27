@@ -144,6 +144,9 @@ namespace Runtime.UserInterface
                 case StageObjectType.Scenery:
                     StageEditingManager.Instance.InstantiateNewSceneryToStage(StageObjectData, Vector2.zero);
                     break;
+                case StageObjectType.Light:
+                    
+                    break;
                 default:
                     Debug.LogError("Undefined Stage Object Type");
                     canAddToScene = false;

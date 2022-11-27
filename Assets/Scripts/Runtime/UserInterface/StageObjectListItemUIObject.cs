@@ -1,6 +1,7 @@
 ﻿using System;
 using Runtime.Managers;
 using Runtime.ScriptableObjects;
+using Runtime.Testing;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,11 +23,13 @@ namespace Runtime.UserInterface
         public void ProducedOneItem()
         {
             stageObjectNum.text = (int.Parse(stageObjectNum.text)+1).ToString();
+            TempUIHintManager.Instance.HintText("Object Produced!");
         }
         
         public void RecycledOneItem()
         {
             stageObjectNum.text = (int.Parse(stageObjectNum.text)-1).ToString();
+            TempUIHintManager.Instance.HintText("Object Recycled! Resources has been updated.");
         }
         
         public void UpdateItemUI(BaseStageObjectBlueprintSO blueprint, int curNum, 

@@ -9,6 +9,7 @@ using Runtime.Testing;
 using Runtime.UserInterface;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Runtime.Managers
 {
@@ -61,6 +62,7 @@ namespace Runtime.Managers
         [SerializeField] private GameObject defaultStagePropObjectPrefab;
         [SerializeField] private GameObject defaultStageEffectObjectPrefab;
         [SerializeField] private GameObject defaultStageSceneryObjectPrefab;
+        [SerializeField] private GameObject defaultLightSettingObjectPrefab;
         [SerializeField] private GameObject defaultStageOrchestraObjectPrefab;
         
         [SerializeField] private List<GameObject> functionButtonPrefabs;
@@ -226,9 +228,28 @@ namespace Runtime.Managers
 
         public void InstantiateNewSceneryToStage(BaseStageObjectData objectData, Vector2 positionXY)
         {
+            if (stageSceneryObjectParent.childCount > 0)
+            {
+                PutObjectFromStageToStorage(stageSceneryObjectParent.GetChild(0).GetComponent<BaseStageObject>());
+            }
+            
             var stageObj = Instantiate(defaultStageSceneryObjectPrefab,
                 new Vector3(positionXY.x, positionXY.y, (int)LayerZ.StageCenter),
-                defaultStageSceneryObjectPrefab.transform.rotation).GetComponent<StageSceneryObject>();
+                defaultStageSceneryObjectPrefab.transform.rotation, stageSceneryObjectParent).GetComponent<StageSceneryObject>();
+            stageObj.InitializeFromStageObjectData(objectData);
+            _stageObjectsInstantiated.Add(stageObj);
+        }
+        
+        public void InstantiateNewLightSettingToStage(BaseStageObjectData objectData, Vector2 positionXY)
+        {
+            if (stageLightSettingObjectParent.childCount > 0)
+            {
+                PutObjectFromStageToStorage(stageLightSettingObjectParent.GetChild(0).GetComponent<BaseStageObject>());
+            }
+            
+            var stageObj = Instantiate(defaultLightSettingObjectPrefab,
+                new Vector3(positionXY.x, positionXY.y, (int)LayerZ.StageCenter),
+                defaultLightSettingObjectPrefab.transform.rotation, stageLightSettingObjectParent).GetComponent<StageLightObject>();
             stageObj.InitializeFromStageObjectData(objectData);
             _stageObjectsInstantiated.Add(stageObj);
         }
