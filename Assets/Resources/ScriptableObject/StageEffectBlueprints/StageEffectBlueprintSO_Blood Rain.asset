@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed18f327766a4c3e8e0bce73fb94c455, type: 3}
+  m_Name: StageEffectBlueprintSO_Blood Rain
+  m_EditorClassIdentifier: 
+  previewSprite: {fileID: 0}
+  blueprintName: Blood Rain
+  moneyToBuy: 10
+  resourceConsumes:
+    list:
+    - Key: 0
+      Value: 20
+    - Key: 1
+      Value: 0
+    - Key: 2
+      Value: 0
+    - Key: 3
+      Value: 0
+    - Key: 4
+      Value: 0
+    keyCollision: 0
+  machineLevelRequirement:
+    list:
+    - Key: 1
+      Value: 0
+    - Key: 2
+      Value: 0
+    - Key: 3
+      Value: 0
+    - Key: 4
+      Value: 0
+    keyCollision: 0
+  effectScale: {x: 0.2, y: 0.2}
+  effectSprite: {fileID: 0}
+  effectObjectPrefab: {fileID: 3040624567514805215, guid: 4403694ec5c0b8e45bc2e1876ea9bf58, type: 3}
+  effectLayer: 0
+  effectAmbientSound: {fileID: 0}

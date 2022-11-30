@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Runtime.Managers;
 using Runtime.ScriptableObjects;
 using Runtime.Testing;
@@ -7,6 +8,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 namespace Runtime.UserInterface
@@ -282,7 +284,8 @@ namespace Runtime.UserInterface
             UpdateMachineLevelUI();
 
             // also update the recycle button
-            if (StorageManager.Instance.BlueprintObjectDict[uiObjectToSelect.Blueprint].Count <= 0)
+            if (!StorageManager.Instance.BlueprintObjectDict.ContainsKey(uiObjectToSelect.Blueprint) || 
+                StorageManager.Instance.BlueprintObjectDict[uiObjectToSelect.Blueprint].Count <= 0)
             {
                 recycleButton.interactable = false;
             }
@@ -370,6 +373,13 @@ namespace Runtime.UserInterface
                     if (_selectedStageObject.Blueprint is StageLightSettingBlueprintSO lightBlueprintSo)
                     {
                         var sceneryPrefab = Instantiate(lightBlueprintSo.LightObjectPrefab, stageObjectPreviewParent);
+                        var light2DList = sceneryPrefab.GetComponentsInChildren<Light2D>();
+                        var layers = new int[] {SortingLayer.NameToID("Preview")};
+                        foreach (var light2D in light2DList)
+                        {
+                            FieldInfo fieldInfo = light2D.GetType().GetField("m_ApplyToSortingLayers", BindingFlags.NonPublic | BindingFlags.Instance);
+                            fieldInfo?.SetValue(light2D, layers);
+                        }
                     }
                     break; 
             }

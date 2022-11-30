@@ -50,6 +50,8 @@ namespace Runtime.StageEditingObjects
                 {
                     _spriteRenderer.sprite = stageLightSettingBlueprintSo.PreviewSprite;   
                 }
+                var obj = Instantiate(stageLightSettingBlueprintSo.LightObjectPrefab, this.transform);
+                obj.transform.localScale /= this.transform.localScale.x;
                 // subscribe event for stage editing / viewing
                 StageEditingManager.Instance.AddEditingStageStateChangedListener(OnEditingStageStateChangedEvent);
             }

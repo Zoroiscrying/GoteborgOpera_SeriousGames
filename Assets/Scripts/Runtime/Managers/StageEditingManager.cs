@@ -145,6 +145,8 @@ namespace Runtime.Managers
         public void NotifySwitchToBackStage()
         {
             SwitchToBackstage?.Invoke();
+
+            DeactivateEditingButtons();
             
             foreach (var spriteRenderer in frontCurtainList)
             {

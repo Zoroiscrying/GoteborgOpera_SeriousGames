@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed18f327766a4c3e8e0bce73fb94c455, type: 3}
   m_Name: StageEffectBlueprintSO_Rain
   m_EditorClassIdentifier: 
-  previewSprite: {fileID: 21300000, guid: 8e88614a5d2aead4998a8c70955662c6, type: 3}
+  previewSprite: {fileID: 0}
   blueprintName: Rain Effect
   moneyToBuy: 10
   resourceConsumes:
@@ -40,7 +40,7 @@ MonoBehaviour:
       Value: 0
     keyCollision: 0
   effectScale: {x: 0.2, y: 0.2}
-  effectSprite: {fileID: 21300000, guid: fe3393dec57caeb4194f0d169857526a, type: 3}
+  effectSprite: {fileID: 0}
   effectObjectPrefab: {fileID: 3040624567514805215, guid: 4403694ec5c0b8e45bc2e1876ea9bf58, type: 3}
   effectLayer: 0
   effectAmbientSound: {fileID: 0}

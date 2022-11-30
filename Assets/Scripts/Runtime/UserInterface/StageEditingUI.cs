@@ -199,7 +199,7 @@ namespace Runtime.UserInterface
                     obj.InitializeAsSceneryObject((SceneryStageObjectData)objectData);
                     break;
                 case StageObjectType.Light:
-                    // obj.initialiaslit((SceneryStageObjectData)objectData);
+                    obj.InitializeAsLightObject((LightStageObjectData)objectData);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(objectType), objectType, null);

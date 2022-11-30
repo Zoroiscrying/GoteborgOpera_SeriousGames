@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed18f327766a4c3e8e0bce73fb94c455, type: 3}
+  m_Name: StageEffectBlueprintSO_Fire
+  m_EditorClassIdentifier: 
+  previewSprite: {fileID: 21300000, guid: 05b152c2907d18d4aacf0bd57dc4a58c, type: 3}
+  blueprintName: Fire Effect
+  moneyToBuy: 10
+  resourceConsumes:
+    list:
+    - Key: 0
+      Value: 10
+    - Key: 1
+      Value: 0
+    - Key: 2
+      Value: 0
+    - Key: 3
+      Value: 0
+    - Key: 4
+      Value: 0
+    keyCollision: 0
+  machineLevelRequirement:
+    list:
+    - Key: 1
+      Value: 0
+    - Key: 2
+      Value: 0
+    - Key: 3
+      Value: 0
+    - Key: 4
+      Value: 0
+    keyCollision: 0
+  effectScale: {x: 0.2, y: 0.2}
+  effectSprite: {fileID: 0}
+  effectObjectPrefab: {fileID: 1605088075178099622, guid: 76cd401bb01d9e84f98007b15bf8791d, type: 3}
+  effectLayer: 1
+  effectAmbientSound: {fileID: 0}

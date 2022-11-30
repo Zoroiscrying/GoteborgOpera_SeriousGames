@@ -110,15 +110,16 @@ namespace Runtime.UserInterface
         
         public void InitializeAsLightObject(LightStageObjectData objectData)
         {
-            _stageObjectType = StageObjectType.Scenery;
-            _stageObjectType = StageObjectType.Effect;
+            _stageObjectType = StageObjectType.Light;
             _objectData = objectData;
             objectName.text = objectData.objectName;
-            // var stageSceneryBlueprintSo = (objectData.baseStageObjectBlueprintSO) as lightso;
-            // if (stageSceneryBlueprintSo != null)
-            // {
-            //     previewTexture.texture = stageSceneryBlueprintSo.SceneryPreviewTexture;
-            // }
+            var stageSceneryBlueprintSo = (objectData.baseStageObjectBlueprintSO) as StageLightSettingBlueprintSO;
+            if (stageSceneryBlueprintSo != null)
+            {
+                propIcon.sprite = stageSceneryBlueprintSo.PreviewSprite
+                    ? stageSceneryBlueprintSo.PreviewSprite
+                    : SharedAssetsManager.Instance.CustomLightObjectSprite;
+            }
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -145,7 +146,7 @@ namespace Runtime.UserInterface
                     StageEditingManager.Instance.InstantiateNewSceneryToStage(StageObjectData, Vector2.zero);
                     break;
                 case StageObjectType.Light:
-                    
+                    StageEditingManager.Instance.InstantiateNewLightSettingToStage(StageObjectData, Vector2.zero);
                     break;
                 default:
                     Debug.LogError("Undefined Stage Object Type");

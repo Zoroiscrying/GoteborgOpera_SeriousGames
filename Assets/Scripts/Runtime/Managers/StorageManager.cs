@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Runtime.DataStructures;
 using Runtime.Managers;
 using Runtime.ScriptableObjects;
@@ -104,6 +105,10 @@ namespace Runtime.Testing
         private void Awake()
         {
             _instance = this;
+
+            ownedBlueprints = ownedBlueprints.Distinct().ToList();
+            ownedBlueprints.Sort((Comparison));
+
             foreach (var stageObject in stageObjectDataList)
             {
                 if (stageObject is not PropStageObjectData propStageObjectData)
@@ -120,6 +125,25 @@ namespace Runtime.Testing
                     _blueprintObjectDict.Add(blueprint, new List<BaseStageObjectData>());
                 }
             }
+        }
+
+        private int Comparison(BaseStageObjectBlueprintSO from, BaseStageObjectBlueprintSO to)
+        {
+            int result = 0;
+            
+            result = (from.ObjectDataType).CompareTo(to.ObjectDataType);
+                
+            if (result == 0)
+            {
+                result = from.MoneyToBuy.CompareTo(to.MoneyToBuy);   
+            }
+            
+            if (result == 0)
+            {
+                result = string.Compare(from.BlueprintName, to.BlueprintName, StringComparison.Ordinal);
+            }
+            
+            return result;
         }
 
         #region Public Function Interfaces

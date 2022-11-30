@@ -72,11 +72,26 @@ namespace Runtime.ScriptableObjects
         {
             if (obj == null) return 1;
 
-            StagePropBlueprintSO otherBlueprint = obj as StagePropBlueprintSO;
+            var otherBlueprint = obj as StagePropBlueprintSO;
+            int result = 0;
             if (otherBlueprint != null)
-                return this.MoneyToBuy.CompareTo(otherBlueprint.MoneyToBuy);
-            else
-                throw new ArgumentException("Object is not a Blueprint");
+            {
+                Debug.Log("Type:" + this.ObjectDataType + " Name:" + this.blueprintName);
+                
+                result = ((int)this.ObjectDataType).CompareTo((int)otherBlueprint.ObjectDataType);
+                
+                // if (result == 0)
+                // {
+                //     result = this.MoneyToBuy.CompareTo(otherBlueprint.MoneyToBuy);   
+                // }
+                // 
+                // if (result == 0)
+                // {
+                //     result = string.Compare(this.BlueprintName, otherBlueprint.BlueprintName, StringComparison.Ordinal);
+                // }
+            }
+            
+            return result;
         }
     }
 }

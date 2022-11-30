@@ -12,9 +12,9 @@ namespace Runtime.ScriptableObjects
         private GameObject lightObjectPrefab;
 
         public GameObject LightObjectPrefab => lightObjectPrefab;
-
+        
         public override Sprite PreviewSprite => SharedAssetsManager.Instance.CustomLightObjectSprite;
 
-        public override StageObjectType ObjectDataType => StageObjectType.Scenery;
+        public override StageObjectType ObjectDataType => StageObjectType.Light;
     }
 }

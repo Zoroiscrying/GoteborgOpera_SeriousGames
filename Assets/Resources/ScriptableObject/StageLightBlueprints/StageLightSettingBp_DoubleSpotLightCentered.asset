@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e071fb24148c4da989aff88642be15a4, type: 3}
   m_Name: StageLightSettingBp_DoubleSpotLightCentered
   m_EditorClassIdentifier: 
-  previewSprite: {fileID: 0}
+  previewSprite: {fileID: 21300000, guid: 823fa65f9a582fe47974a64ec61d017c, type: 3}
   blueprintName: Double Spot Light
-  moneyToBuy: 30
+  moneyToBuy: 15
   resourceConsumes:
     list:
     - Key: 0
-      Value: 0
+      Value: 30
     - Key: 1
       Value: 0
     - Key: 2
