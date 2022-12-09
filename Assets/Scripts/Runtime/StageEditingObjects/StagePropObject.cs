@@ -12,8 +12,6 @@ namespace Runtime.Testing
     [ExecuteInEditMode]
     public class StagePropObject : BaseStageObject
     {
-        private SpriteRenderer _spriteRenderer;
-        
         [SerializeField] private BasePropDecorator basePropDecorator;
 
         private AudioSource _audioSource;

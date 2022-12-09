@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 092f7f3e5498467c8e9abbbca86895b8, type: 3}
+  m_Name: BlueprintPack_La Boheme Pack
+  m_EditorClassIdentifier: 
+  packName: "La boh\xE8me Pack"
+  stageObjectBlueprints:
+  - {fileID: 11400000, guid: 30299b65d8fd9374bbe920fbfd7baf29, type: 2}
+  - {fileID: 11400000, guid: ea426b44c59507c4c8af4fc0065af9f1, type: 2}
+  - {fileID: 11400000, guid: 72b3f04f62eebee4192bf2e5c100e516, type: 2}
+  - {fileID: 11400000, guid: 80f06644e95cb2b44a0f34004b31e7cd, type: 2}
+  - {fileID: 11400000, guid: e75ccf0314c06274692b8ac2aa6af983, type: 2}
+  - {fileID: 11400000, guid: d6432ac732d3f3d4596a10a2095b4d4e, type: 2}
+  - {fileID: 11400000, guid: 5dca2b4b47168774f8bd794473753a55, type: 2}
+  - {fileID: 11400000, guid: 217422144adc3bf4cabc30f5e28431db, type: 2}
+  - {fileID: 11400000, guid: 2612df81090085c4f9c93e747a3916ad, type: 2}
+  - {fileID: 11400000, guid: b894cd0674e75f04681f59ca9d57b3a5, type: 2}
+  - {fileID: 11400000, guid: 8d4f2ee02a50ad347bdd8ca6ed9b6d88, type: 2}
+  - {fileID: 11400000, guid: 3a483ea14b74fce40a043afb480e71bb, type: 2}
+  - {fileID: 11400000, guid: 5dc979606d1594e40a19f05646dd3c02, type: 2}
+  - {fileID: 11400000, guid: 4d331066ea5694242886364cf7f53715, type: 2}
+  - {fileID: 11400000, guid: a944636fb1679364f8f8f7aaed07a3c5, type: 2}
+  - {fileID: 11400000, guid: 928a263eb84c87f4a9efb508e4f09187, type: 2}
+  packDescription: "\rOnce we were all immortal. In four short acts, Puccini's beloved
+    opera La boh\xE8me captures the essence of the carelessness of youth, where youth
+    itself shines, fades and dies.\r\n<b>Example of content:</b>Valkyrie, Princess,
+    decorations and various carts available for you to choose."

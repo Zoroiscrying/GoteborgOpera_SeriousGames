@@ -11,7 +11,6 @@ namespace Runtime.StageEditingObjects
         typeof(StageTouchablePropObject))]
     public class StageOrchestraObject : BaseStageObject
     {
-        private SpriteRenderer _spriteRenderer;
         private AudioSource _audioSource;
         
         protected override void OnEnable()

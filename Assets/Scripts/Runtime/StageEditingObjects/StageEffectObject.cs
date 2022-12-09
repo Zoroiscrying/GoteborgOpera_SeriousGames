@@ -11,7 +11,6 @@ namespace Runtime.StageEditingObjects
     [ExecuteInEditMode]
     public class StageEffectObject : BaseStageObject
     {
-        private SpriteRenderer _spriteRenderer;
         private AudioSource _audioSource;
         
         protected override void OnEnable()
@@ -53,12 +52,11 @@ namespace Runtime.StageEditingObjects
 
             if (stageEffectBlueprintSo != null)
             {
-                this.transform.localScale = new Vector3(stageEffectBlueprintSo.EffectScale.x,
-                    stageEffectBlueprintSo.EffectScale.y, 1.0f);
-                
                 if (stageEffectBlueprintSo.EffectObjectPrefab)
                 {
-                    Instantiate(stageEffectBlueprintSo.EffectObjectPrefab, this.transform);      
+                    var effectObj = Instantiate(stageEffectBlueprintSo.EffectObjectPrefab, this.transform);  
+                    effectObj.transform.localScale = new Vector3(stageEffectBlueprintSo.EffectScale.x / this.transform.localScale.x,
+                        stageEffectBlueprintSo.EffectScale.y / this.transform.localScale.y, 1.0f);
                 }
 
                 if (stageEffectBlueprintSo.EffectLayer == CustomEffectLayer.BackgroundDecal || 

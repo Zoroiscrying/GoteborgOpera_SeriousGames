@@ -60,6 +60,7 @@ namespace Runtime.Managers
         [Header("Template Prefabs")]
         [FormerlySerializedAs("defaultStageObjectPrefab")] 
         [SerializeField] private GameObject defaultStagePropObjectPrefab;
+        [SerializeField] private GameObject defaultStageActorObjectPrefab;
         [SerializeField] private GameObject defaultStageEffectObjectPrefab;
         [SerializeField] private GameObject defaultStageSceneryObjectPrefab;
         [SerializeField] private GameObject defaultLightSettingObjectPrefab;
@@ -202,7 +203,11 @@ namespace Runtime.Managers
 
         public void InstantiateNewActorToStage(BaseStageObjectData objectData, Vector2 positionXY)
         {
-            // StageActorObject
+            var stageObj = Instantiate(defaultStageActorObjectPrefab,
+                new Vector3(positionXY.x, positionXY.y, (int)LayerZ.StageCenter),
+                defaultStageActorObjectPrefab.transform.rotation).GetComponent<StageActorObject>();
+            stageObj.InitializeFromStageObjectData(objectData);
+            _stageObjectsInstantiated.Add(stageObj);
         }
         
         public void InstantiateNewOrchestraToStage(BaseStageObjectData objectData, Vector2 positionXY)

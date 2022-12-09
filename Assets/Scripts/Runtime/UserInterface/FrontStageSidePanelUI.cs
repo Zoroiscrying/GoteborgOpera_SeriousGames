@@ -1,5 +1,8 @@
-﻿using Runtime.Testing;
+﻿using System;
+using Runtime.Managers;
+using Runtime.Testing;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -23,7 +26,6 @@ namespace Runtime.UserInterface
         [SerializeField] private Button settingsButton;
         [FormerlySerializedAs("shareButton")] [SerializeField] private Button purchaseButton;
         [SerializeField] private Button aboutButton;
-
         [SerializeField] private RectTransform sideExpandedPanel;
 
         private void OnEnable()
@@ -37,6 +39,7 @@ namespace Runtime.UserInterface
             purchaseButton.onClick.AddListener(PurchasePanel);
             aboutButton.onClick.AddListener(AboutPanel);
             quitButton.onClick.AddListener(QuitGame);
+            StageEditingManager.Instance.AddEditingStageStateChangedListener(OnEnteringEditScene);
         }
 
         private void OnDisable()
@@ -50,12 +53,24 @@ namespace Runtime.UserInterface
             purchaseButton.onClick.RemoveListener(PurchasePanel);
             aboutButton.onClick.RemoveListener(AboutPanel);
             quitButton.onClick.RemoveListener(QuitGame);
+            if (StageEditingManager.Instance)
+            {
+                StageEditingManager.Instance.RemoveEditingStageStateChangedListener(OnEnteringEditScene);   
+            }
         }
 
         public void OpenFrontStageViewingPanel()
         {
             frontStageViewingPanel.gameObject.SetActive(true);
             sideExpandedPanel.gameObject.SetActive(false);
+        }
+        
+        private void OnEnteringEditScene(bool editable)
+        {
+            if (!editable)
+            {
+                sidePanelExpandButton.GetComponent<Image>().sprite = spriteUnexpanded;
+            }
         }
         
         private void ToggleExpandedPanel()
@@ -84,7 +99,7 @@ namespace Runtime.UserInterface
         private void AboutPanel()
         {
             // this is going to open up the developers panel
-            
+            TempUIHintManager.Instance.HintText("This is the page where you find more info regarding how to play this game.");  
         }
 
         private void OpenQuestsPage()

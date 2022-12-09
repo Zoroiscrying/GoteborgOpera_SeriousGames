@@ -39,7 +39,7 @@ MonoBehaviour:
     - Key: 4
       Value: 0
     keyCollision: 0
-  effectScale: {x: 0.2, y: 0.2}
+  effectScale: {x: 1, y: 1}
   effectSprite: {fileID: 0}
   effectObjectPrefab: {fileID: 1605088075178099622, guid: 76cd401bb01d9e84f98007b15bf8791d, type: 3}
   effectLayer: 1

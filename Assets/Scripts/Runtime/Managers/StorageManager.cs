@@ -68,6 +68,9 @@ namespace Runtime.Testing
         [SerializeField] private int maxStagePropNum = 10;
         public int MaxStagePropNum => maxStagePropNum;
 
+        [SerializeField] private List<BlueprintPackSO> ownedBlueprintPacks;
+        public List<BlueprintPackSO> OwnedBlueprintPacks => ownedBlueprintPacks;
+
         // This list should be serialized for players
         [SerializeField] private List<BaseStageObjectBlueprintSO> ownedBlueprints;
         public List<BaseStageObjectBlueprintSO> OwnedBlueprints => ownedBlueprints;
@@ -84,6 +87,8 @@ namespace Runtime.Testing
         private Dictionary<BaseStageObjectBlueprintSO, List<BaseStageObjectData>> _blueprintObjectDict = 
             new Dictionary<BaseStageObjectBlueprintSO, List<BaseStageObjectData>>();
         public Dictionary<BaseStageObjectBlueprintSO, List<BaseStageObjectData>> BlueprintObjectDict => _blueprintObjectDict;
+
+        public int TempUsedBlueprintPackPoint = 2;
 
         private StageEditingUI StageEditingUI
         {
@@ -118,6 +123,11 @@ namespace Runtime.Testing
                 AddBlueprintStageObjectDict(propStageObjectData);
             }
 
+            foreach (var blueprintPack in ownedBlueprintPacks)
+            {
+                AddBlueprintPackToStorage(blueprintPack);
+            }
+
             foreach (var blueprint in ownedBlueprints)
             {
                 if (!_blueprintObjectDict.ContainsKey(blueprint))
@@ -147,6 +157,21 @@ namespace Runtime.Testing
         }
 
         #region Public Function Interfaces
+
+        public void AddBlueprintPackToStorage(BlueprintPackSO blueprintPackSo)
+        {
+            foreach (var blueprint in blueprintPackSo.StageObjectBlueprints)
+            {
+                TryAddBlueprintToStorage(blueprint);
+            }
+            ownedBlueprints = ownedBlueprints.Distinct().ToList();
+            ownedBlueprints.Sort((Comparison));
+            // only create new base stage object data list for those blueprints that don't have a list of initialized object data in the dict
+            foreach (var blueprint in ownedBlueprints.Where(blueprint => !_blueprintObjectDict.ContainsKey(blueprint)))
+            {
+                _blueprintObjectDict.Add(blueprint, new List<BaseStageObjectData>());
+            }
+        }
 
         public void AddStageObjectData(BaseStageObjectData stageObjectData)
         {
@@ -377,6 +402,15 @@ namespace Runtime.Testing
             return requireMoney;
         }
 
+        private void TryAddBlueprintToStorage(BaseStageObjectBlueprintSO blueprintSo)
+        {
+            if (!ownedBlueprints.Contains(blueprintSo))
+            {
+                ownedBlueprints.Add(blueprintSo);
+                ownedBlueprints.Sort();
+            }
+        }
+        
         private bool TryUpgradeMachineLevel(GResourceType resourceType)
         {
             int curMachineLevel = machineLevels[resourceType];

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Runtime.Managers;
 using Runtime.ScriptableObjects;
@@ -26,7 +27,16 @@ namespace Runtime.UserInterface
         // Prop List UI
         [SerializeField] private RectTransform propListTransform;
         [SerializeField] private GameObject propListItemPrefab;
+        [SerializeField] private StageObjectType stageObjectTypesToDisplay = (StageObjectType)~0;
 
+        // Stage object filter buttons
+        [SerializeField] private Button togglePropDisplayButton;
+        [SerializeField] private Button toggleActorDisplayButton;
+        [SerializeField] private Button toggleOrchestraDisplayButton;
+        [SerializeField] private Button toggleEffectDisplayButton;
+        [SerializeField] private Button toggleSceneryDisplayButton;
+        [SerializeField] private Button toggleLightDisplayButton;
+        
         // Machine Levels UI
         [SerializeField] private TextMeshProUGUI woodMachineLevel;
         [SerializeField] private TextMeshProUGUI metalMachineLevel;
@@ -80,6 +90,13 @@ namespace Runtime.UserInterface
             producePropButton.onClick.AddListener(ProduceSelectedProp);
             recycleButton.onClick.AddListener(RecycleSelectedProp);
             backButton.onClick.AddListener(SwitchToBackstageView);
+            // - filter event
+            togglePropDisplayButton.onClick.AddListener(TogglePropFlag);
+            toggleActorDisplayButton.onClick.AddListener(ToggleActorFlag);
+            toggleOrchestraDisplayButton.onClick.AddListener(ToggleOrchestraFlag);
+            toggleEffectDisplayButton.onClick.AddListener(ToggleEffectFlag);
+            toggleSceneryDisplayButton.onClick.AddListener(ToggleSceneryFlag);
+            toggleLightDisplayButton.onClick.AddListener(ToggleLightFlag);
         }
 
         private void OnDisable()
@@ -107,6 +124,60 @@ namespace Runtime.UserInterface
             //previewShotCamera.Render();
             //previewShotCamera.enabled = false;
         }
+
+        #region Blueprint filter functions
+
+        private void TogglePropFlag()
+        {
+            ToggleStageObjectTypeFlag(StageObjectType.Prop);
+            togglePropDisplayButton.GetComponent<Image>().color = stageObjectTypesToDisplay.HasFlag(StageObjectType.Prop) ? Color.white : Color.gray;
+        }
+
+        private void ToggleActorFlag()
+        {
+            ToggleStageObjectTypeFlag(StageObjectType.Actor);
+            toggleActorDisplayButton.GetComponent<Image>().color = stageObjectTypesToDisplay.HasFlag(StageObjectType.Actor) ?  Color.white : Color.gray;
+        }
+
+        private void ToggleOrchestraFlag()
+        {
+            ToggleStageObjectTypeFlag(StageObjectType.Orchestra);
+            toggleOrchestraDisplayButton.GetComponent<Image>().color = stageObjectTypesToDisplay.HasFlag(StageObjectType.Orchestra) ?  Color.white : Color.gray;
+        }
+
+        private void ToggleEffectFlag()
+        {
+            ToggleStageObjectTypeFlag(StageObjectType.Effect);
+            toggleEffectDisplayButton.GetComponent<Image>().color = stageObjectTypesToDisplay.HasFlag(StageObjectType.Effect) ?  Color.white : Color.gray;
+        }
+
+        private void ToggleSceneryFlag()
+        {
+            ToggleStageObjectTypeFlag(StageObjectType.Scenery);
+            toggleSceneryDisplayButton.GetComponent<Image>().color = stageObjectTypesToDisplay.HasFlag(StageObjectType.Scenery) ?  Color.white : Color.gray;
+        }
+
+        private void ToggleLightFlag()
+        {
+            ToggleStageObjectTypeFlag(StageObjectType.Light);
+            toggleLightDisplayButton.GetComponent<Image>().color = stageObjectTypesToDisplay.HasFlag(StageObjectType.Light) ?  Color.white : Color.gray;
+        }
+
+        private void ToggleStageObjectTypeFlag(StageObjectType typeToToggle)
+        {
+            if (stageObjectTypesToDisplay.HasFlag(typeToToggle))
+            {
+                stageObjectTypesToDisplay &= (~typeToToggle);
+            }
+            else
+            {
+                stageObjectTypesToDisplay |= typeToToggle;
+            }
+            
+            UpdateBlueprintList(true);
+        }
+        
+        #endregion
 
         private void SwitchToBackstageView()
         {
@@ -170,11 +241,11 @@ namespace Runtime.UserInterface
         }
         
         /// <summary>
-        /// Update the prop list UI view, including:
+        /// Update the prop list UI view according to the current type flags, including:
         /// - The blueprints that the player has
         /// - The number of produced prop for each blueprint
         /// </summary>
-        private void UpdateBlueprintList()
+        private void UpdateBlueprintList(bool isTogglingTypeFilter = false)
         {
             // the blueprints the player have is stored in the storage manager
             var blueprintStageObjectDict = StorageManager.Instance.BlueprintObjectDict;
@@ -184,7 +255,7 @@ namespace Runtime.UserInterface
             producePropButton.interactable = false;
             recycleButton.interactable = false;
             
-            if (_propListItems.Count != ownedBlueprints.Count)
+            if (_propListItems.Count != ownedBlueprints.Count || isTogglingTypeFilter)
             {
                 // first destroy all the prop list item game objects
                 foreach (var propListItem in _propListItems)
@@ -195,8 +266,9 @@ namespace Runtime.UserInterface
                 _propListItems.Clear();
                 
                 // re-generate the list item objects
-                foreach (var blueprint in ownedBlueprints)
+                foreach (var blueprint in ownedBlueprints.Where(blueprint => stageObjectTypesToDisplay.HasFlag(blueprint.ObjectDataType)))
                 {
+                    // Debug.Log(blueprint.ObjectDataType);
                     AddNewStageBlueprintListItem(blueprint,
                         blueprintStageObjectDict.ContainsKey(blueprint)
                             ? blueprintStageObjectDict[blueprint].Count
@@ -328,7 +400,24 @@ namespace Runtime.UserInterface
                     }
                     break;
                 case StageObjectType.Actor:
-                    // Instantiate()
+                    if (_selectedStageObject.Blueprint is StageActorBlueprintSO stageActorBlueprintSo)
+                    {
+                        var newObj = new GameObject("ActorObject")
+                        {
+                            layer = LayerMask.NameToLayer("PreviewStage"),
+                            transform =
+                            {
+                                parent = stageObjectPreviewParent.transform,
+                                localPosition = Vector3.zero,
+                            }
+                        };
+                        var newRenderer = newObj.AddComponent<SpriteRenderer>();
+                        newRenderer.sprite = stageActorBlueprintSo.ActorSprite;
+                        newRenderer.transform.localScale =
+                            new Vector3(stageActorBlueprintSo.ActorSize.x, stageActorBlueprintSo.ActorSize.y, 1);
+                        newRenderer.sortingLayerName = "Preview";
+                        newRenderer.sortingOrder = 5;
+                    }
                     break;
                 case StageObjectType.Orchestra:
                     if (_selectedStageObject.Blueprint is StageOrchestraBlueprintSO orchestraBlueprintSo)
@@ -350,7 +439,9 @@ namespace Runtime.UserInterface
                     {
                         if (stageEffectBlueprintSo.EffectObjectPrefab)
                         {
-                            var effectPrefab = Instantiate(stageEffectBlueprintSo.EffectObjectPrefab, stageObjectPreviewParent);   
+                            var effectPrefab = Instantiate(stageEffectBlueprintSo.EffectObjectPrefab, stageObjectPreviewParent);  
+                            effectPrefab.transform.localScale =
+                                new Vector3(stageEffectBlueprintSo.EffectScale.x, stageEffectBlueprintSo.EffectScale.y, 1);
                         }
                         else
                         {

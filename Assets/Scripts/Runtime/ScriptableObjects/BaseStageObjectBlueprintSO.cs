@@ -76,7 +76,7 @@ namespace Runtime.ScriptableObjects
             int result = 0;
             if (otherBlueprint != null)
             {
-                Debug.Log("Type:" + this.ObjectDataType + " Name:" + this.blueprintName);
+                // Debug.Log("Type:" + this.ObjectDataType + " Name:" + this.blueprintName);
                 
                 result = ((int)this.ObjectDataType).CompareTo((int)otherBlueprint.ObjectDataType);
                 

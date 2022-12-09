@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 092f7f3e5498467c8e9abbbca86895b8, type: 3}
+  m_Name: BlueprintPack_Die schweigsame Frau Pack
+  m_EditorClassIdentifier: 
+  packName: Die schweigsame Frau Pack
+  stageObjectBlueprints:
+  - {fileID: 11400000, guid: cb49cc985229fe24f9ca10ecc6f1482b, type: 2}
+  - {fileID: 11400000, guid: 7a5da51ab9c211748b380a05191850fc, type: 2}
+  - {fileID: 11400000, guid: 4cc1faa1a3d506e46864595dfad4b28c, type: 2}
+  - {fileID: 11400000, guid: 13f5c93bdfbbfa84497b9c80e2d24d4b, type: 2}
+  - {fileID: 11400000, guid: 01ce5223413ea3948b709605bbba048d, type: 2}
+  - {fileID: 11400000, guid: 768e84b6e6310634293dd402c63475f4, type: 2}
+  - {fileID: 11400000, guid: a5145e45255744b449b51242fb2fa0fa, type: 2}
+  - {fileID: 11400000, guid: 3c0203fb622ed5543b73f7fea1d0c4cc, type: 2}
+  - {fileID: 11400000, guid: 21978c07b662c3543aad0cd92fe47b11, type: 2}
+  - {fileID: 11400000, guid: f03888c896de63147adefdfbdfacf589, type: 2}
+  - {fileID: 11400000, guid: 4f78ee4ac9b4d434ab95c97f492482e4, type: 2}
+  - {fileID: 11400000, guid: 7357a2d5b66743a46912b5338deac83f, type: 2}
+  - {fileID: 11400000, guid: d5c9bc780bed0014cbf894497d1fad14, type: 2}
+  - {fileID: 11400000, guid: 6ad08fa354e2463449cecb16bcb66107, type: 2}
+  packDescription: 'Swedish premiere of Strauss''s comic opera "The Silent Woman",
+    a glittering gem with musical power, large ensembles and quiet contemplation.
+
+    <b>Example
+    of content:</b> Lady in red, French Soilder, Old Artist, and other actors!'

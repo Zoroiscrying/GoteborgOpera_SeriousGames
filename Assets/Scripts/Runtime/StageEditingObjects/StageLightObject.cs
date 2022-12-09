@@ -10,8 +10,6 @@ namespace Runtime.StageEditingObjects
     [ExecuteInEditMode]
     public class StageLightObject : BaseStageObject
     {
-        private SpriteRenderer _spriteRenderer;
-        
         protected override void OnEnable()
         {
             base.OnEnable();

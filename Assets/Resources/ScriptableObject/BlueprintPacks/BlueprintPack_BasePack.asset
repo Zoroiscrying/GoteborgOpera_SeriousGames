@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 092f7f3e5498467c8e9abbbca86895b8, type: 3}
+  m_Name: BlueprintPack_BasePack
+  m_EditorClassIdentifier: 
+  packName: Base Opera Pack
+  stageObjectBlueprints:
+  - {fileID: 11400000, guid: 5c99f194ba7789a438d27ef27a0e2009, type: 2}
+  - {fileID: 11400000, guid: 84e10a98448ef904e865271eac3a3b2a, type: 2}
+  - {fileID: 11400000, guid: d0c2630ec6248f84c96e3b79b4fe2966, type: 2}
+  - {fileID: 11400000, guid: db8e87676b4d1f541bddae4843f3e1ea, type: 2}
+  - {fileID: 11400000, guid: a2f58817d0ab3024c98b87e5a7996c33, type: 2}
+  - {fileID: 11400000, guid: f023410b7a246024884e52b5aac7a0c8, type: 2}
+  - {fileID: 11400000, guid: 25417c8531ced6d4996bb938dcaaf73b, type: 2}
+  - {fileID: 11400000, guid: 5434161cca0492740a32c1c0cd5f7b09, type: 2}
+  - {fileID: 11400000, guid: fbe810554bbfe66449328d14fb7007fd, type: 2}
+  - {fileID: 11400000, guid: e03377ad9f5813748a92feba92495035, type: 2}
+  packDescription: Base pack! You've got chairs, desks, and lots of starter props
+    to build up the scenes.

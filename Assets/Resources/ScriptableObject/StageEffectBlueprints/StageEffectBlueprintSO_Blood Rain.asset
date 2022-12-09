@@ -41,6 +41,6 @@ MonoBehaviour:
     keyCollision: 0
   effectScale: {x: 0.2, y: 0.2}
   effectSprite: {fileID: 0}
-  effectObjectPrefab: {fileID: 3040624567514805215, guid: 4403694ec5c0b8e45bc2e1876ea9bf58, type: 3}
+  effectObjectPrefab: {fileID: 725680500031336980, guid: 3004617c86f04d640917cf12461553c9, type: 3}
   effectLayer: 0
   effectAmbientSound: {fileID: 0}

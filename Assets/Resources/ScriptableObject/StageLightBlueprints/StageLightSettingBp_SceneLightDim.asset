@@ -39,4 +39,4 @@ MonoBehaviour:
     - Key: 4
       Value: 0
     keyCollision: 0
-  lightObjectPrefab: {fileID: 4403914622290253900, guid: 3f705be379bed594ab2283f39566ba86, type: 3}
+  lightObjectPrefab: {fileID: 2881051784369151093, guid: 602d4d216497d254e812459eac415906, type: 3}

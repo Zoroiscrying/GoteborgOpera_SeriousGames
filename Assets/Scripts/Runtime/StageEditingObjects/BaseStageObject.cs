@@ -16,6 +16,9 @@ namespace Runtime.Testing
     [ExecuteInEditMode]
     public class BaseStageObject : MonoBehaviour
     {
+        protected SpriteRenderer _spriteRenderer;
+        protected MaterialPropertyBlock _materialPropertyBlock;
+        
         protected StageTouchablePropObject _stageTouchablePropObject;
 
         public BaseStageObjectData StageObjectData => stageObjectData;
@@ -53,10 +56,55 @@ namespace Runtime.Testing
         {
             this.stageObjectData = stageObjectData;
             OnEnable();
-            RegisterButtonDownEvent();
+            RegisterHoldingButtonDownEvent();
+            RegisterOnButtonDownEvent();
+            RegisterOnButtonUpEvent();
+            OnTouchableButtonUp();
         }
 
-        public void RegisterButtonDownEvent()
+        private void RegisterOnButtonDownEvent()
+        {
+            this.GetComponent<StageTouchablePropObject>().SubscribeOnObjectButtonDown(OnTouchableButtonDown);
+        }
+
+        protected virtual void OnTouchableButtonDown()
+        {
+            if (!_spriteRenderer)
+            {
+                _spriteRenderer = GetComponent<SpriteRenderer>();   
+            }
+            
+            if (_spriteRenderer)
+            {
+                _spriteRenderer.color = SharedAssetsManager.Instance.MenuHighlightColor;
+                _spriteRenderer.GetPropertyBlock(_materialPropertyBlock);
+                _materialPropertyBlock.SetFloat("_OutlineWidth", 2.0f);
+                _spriteRenderer.SetPropertyBlock(_materialPropertyBlock);
+            }
+        }
+        
+        private void RegisterOnButtonUpEvent()
+        {
+            this.GetComponent<StageTouchablePropObject>().SubscribeOnObjectButtonUp(OnTouchableButtonUp);
+        }
+
+        protected virtual void OnTouchableButtonUp()
+        {
+            if (!_spriteRenderer)
+            {
+                _spriteRenderer = GetComponent<SpriteRenderer>();   
+            }
+            
+            if (_spriteRenderer)
+            {
+                _spriteRenderer.color = SharedAssetsManager.Instance.OptionalWhiteColor;
+                _spriteRenderer.GetPropertyBlock(_materialPropertyBlock);
+                _materialPropertyBlock.SetFloat("_OutlineWidth", 0.0f);
+                _spriteRenderer.SetPropertyBlock(_materialPropertyBlock);
+            }
+        }
+
+        private void RegisterHoldingButtonDownEvent()
         {
             this.GetComponent<StageTouchablePropObject>().SubscribeOnObjectActivated((OnTouchableActivated));
         }
@@ -77,6 +125,12 @@ namespace Runtime.Testing
         protected virtual void OnEnable()
         {
             _stageTouchablePropObject = GetComponent<StageTouchablePropObject>();
+            if (!_spriteRenderer)
+            {
+                _spriteRenderer = GetComponent<SpriteRenderer>();
+            }
+            _materialPropertyBlock = new MaterialPropertyBlock();
+            _spriteRenderer.GetPropertyBlock(_materialPropertyBlock);
         }
     }
 }

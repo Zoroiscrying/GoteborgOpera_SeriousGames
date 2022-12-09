@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 092f7f3e5498467c8e9abbbca86895b8, type: 3}
+  m_Name: BlueprintPack_StarterAudioPack
+  m_EditorClassIdentifier: 
+  packName: Starter Audio Pack
+  stageObjectBlueprints:
+  - {fileID: 11400000, guid: 19c9a3810b43a6e40a91a1727ee707a0, type: 2}
+  - {fileID: 11400000, guid: a78d02021d6b94a4d924cbe0e50b4409, type: 2}
+  - {fileID: 11400000, guid: dea1efdc17e5f5148801539f29af8b97, type: 2}
+  - {fileID: 11400000, guid: d6c9f112fb2747248852b85d74b68423, type: 2}
+  - {fileID: 11400000, guid: 7c2b62e5b55f31e4783a392d6cdc39b6, type: 2}
+  - {fileID: 11400000, guid: 7c5203a2d74d1f94d8f773005199775a, type: 2}
+  - {fileID: 11400000, guid: df11d91bf090a0f40a4b2726f3817e2a, type: 2}
+  packDescription: Starter Audio Pack.

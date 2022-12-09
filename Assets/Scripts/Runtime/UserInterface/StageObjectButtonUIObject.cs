@@ -66,6 +66,15 @@ namespace Runtime.UserInterface
         public void InitializeAsActor(ActorStageObjectData objectData)
         {
             _stageObjectType = StageObjectType.Actor;
+            _objectData = objectData;
+            objectName.text = objectData.objectName;
+            var stagePropBlueprintSo = (objectData.baseStageObjectBlueprintSO) as StageActorBlueprintSO;
+            if (stagePropBlueprintSo != null)
+            {
+                objectName.text = stagePropBlueprintSo.BlueprintName;
+                propIcon.sprite = stagePropBlueprintSo.ActorSprite ? stagePropBlueprintSo.ActorSprite
+                    : SharedAssetsManager.Instance.CustomPropObjectSprite;   
+            }
         }
 
         public void InitializeAsOrchestra(OrchestraStageObjectData objectData)
