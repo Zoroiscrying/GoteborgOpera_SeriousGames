@@ -105,6 +105,13 @@ namespace Runtime.UserInterface
             producePropButton.onClick.RemoveListener(ProduceSelectedProp);
             recycleButton.onClick.RemoveListener(RecycleSelectedProp);
             backButton.onClick.RemoveListener(SwitchToBackstageView);
+            // - filter event
+            togglePropDisplayButton.onClick.RemoveListener(TogglePropFlag);
+            toggleActorDisplayButton.onClick.RemoveListener(ToggleActorFlag);
+            toggleOrchestraDisplayButton.onClick.RemoveListener(ToggleOrchestraFlag);
+            toggleEffectDisplayButton.onClick.RemoveListener(ToggleEffectFlag);
+            toggleSceneryDisplayButton.onClick.RemoveListener(ToggleSceneryFlag);
+            toggleLightDisplayButton.onClick.RemoveListener(ToggleLightFlag);
         }
 
         public void StartPropProducing()

@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4372aa463114b3f961e7a751b636b4c, type: 3}
-  m_Name: QuestData_Comedy_ForPlaytest
+  m_Name: QuestData_Weird
   m_EditorClassIdentifier: 
-  questTitle: Funny (amusing, comedy)
-  questDescription: "Everybody loves a good laugh, the audience is going to love
-    something Funny!\r"
+  questTitle: Weird (Bizarre, Experimental, surrealism, avant-garde)
+  questDescription: Art is not reserved only to the cultural elites! Surrealism for
+    the working class!

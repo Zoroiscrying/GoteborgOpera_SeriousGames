@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4372aa463114b3f961e7a751b636b4c, type: 3}
   m_Name: QuestData_Funny
   m_EditorClassIdentifier: 
-  questTitle: Funny
+  questTitle: 'Funny (Amusing, Comedy) '
   questDescription: 'Everybody loves a good laugh, the audience is going to love
     something Funny!
 

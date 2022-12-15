@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4372aa463114b3f961e7a751b636b4c, type: 3}
   m_Name: QuestData_Tragedy
   m_EditorClassIdentifier: 
-  questTitle: Tragedy
+  questTitle: Tragedy (sad, death)
   questDescription: "Catharsis for the soul, that is a good way to bring some peace
     to our audience\r."

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4372aa463114b3f961e7a751b636b4c, type: 3}
   m_Name: QuestData_Epic
   m_EditorClassIdentifier: 
-  questTitle: Epic
+  questTitle: 'Epic (Heroic, Legendary) '
   questDescription: "Let\u2019s bring the ancient classics to the stage!\r\n"

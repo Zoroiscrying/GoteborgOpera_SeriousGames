@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4372aa463114b3f961e7a751b636b4c, type: 3}
   m_Name: QuestData_Magic
   m_EditorClassIdentifier: 
-  questTitle: Magic
+  questTitle: 'Magic (Sorcery, Wichcraft) '
   questDescription: "Fantasy is having a resurgence, the people want to see Magic
     in everything!\r"
